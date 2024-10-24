@@ -25,7 +25,7 @@ jobs:
 
       - name: Check domain set
         run: |
-          if [[ ${{ secrets.DOMAIN }} == "" ]]; then exit 1; else echo "OK"; fi
+          if [[ "${{ secrets.DOMAIN1 }}" == "" ]]; then exit 1; else echo "OK"; fi
 
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
