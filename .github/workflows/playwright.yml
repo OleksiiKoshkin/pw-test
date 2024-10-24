@@ -22,15 +22,15 @@ jobs:
           echo "ENV_NAME: $ENV_NAME"
           echo "DOMAIN: $DOMAIN"
           echo "TENANT: $TENANT"
-      - name: Test domain is not set
+
+      - name: Check domain set
+        id: check_domain
+        run:  echo "check_domain=$DOMAIN" >> $GITHUB_OUTPUT
+
+      - name: Pass or fail
         run: |
-          if [ -z "$DOMAIN" ]
-            then
-              echo "Domain is not defined"
-              exit 1
-            else
-              echo "Domain is defined"
-          fi
+          if [[ ${{ steps.check_domain.outputs.check_domain }} == "" ]]; then exit 1; else echo "OK"; fi
+
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
