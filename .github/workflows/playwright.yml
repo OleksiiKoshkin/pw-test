@@ -11,10 +11,15 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+      - name: Use variables
+        run: |
+          echo "domain: $DOMAIN"
+          echo "tenant: $TENANT"
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
