@@ -23,6 +23,7 @@ jobs:
           echo "domain2.1: ${{ env.DOMAIN }}"
           echo "domain2.2: ${{ env.TEST }}"
           echo "domain2: ${{ secrets.DOMAIN }}"
+          echo "domain2: ${{ secrets.staging.DOMAIN }}"
           echo "domain3: ${{ env.vars.DOMAIN }}"
           echo "domain4: ${{ secrets }}"
           echo "tenant: $TENANT"
