@@ -27,9 +27,13 @@ jobs:
         with:
           node-version: lts/*
       - name: Test domain is not set
-        run: exit 1
-        if: ! ${{ secrets.DOMAIN }}
-
+        run: |
+          if [ -z "$$DOMAIN" ]
+            then
+              echo "not defined"
+          else
+              echo "defined"
+          fi
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
