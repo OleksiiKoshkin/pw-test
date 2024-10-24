@@ -24,12 +24,8 @@ jobs:
           echo "TENANT: $TENANT"
 
       - name: Check domain set
-        id: check_domain
-        run:  echo "check_domain=$DOMAIN" >> $GITHUB_OUTPUT
-
-      - name: Pass or fail
         run: |
-          if [[ ${{ steps.check_domain.outputs.check_domain }} == "" ]]; then exit 1; else echo "OK"; fi
+          if [[ ${{ secrets.DOMAIN }} == "" ]]; then exit 1; else echo "OK"; fi
 
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
