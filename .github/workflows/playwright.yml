@@ -20,6 +20,9 @@ jobs:
         run: |
           echo "domain: $DOMAIN"
           echo "tenant: $TENANT"
+      - name: Failing step
+        run: exit 1
+        if: ${{ !vars.DOMAIN }}
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
