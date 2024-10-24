@@ -24,7 +24,7 @@ jobs:
           echo "TENANT: $TENANT"
       - name: Test domain is not set
         run: |
-          if [ -z "$DOMAIN1" ]
+          if [ -z "$DOMAIN" ]
             then
               echo "Domain is not defined"
               exit 1
