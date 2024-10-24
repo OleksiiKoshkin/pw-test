@@ -22,6 +22,8 @@ jobs:
           echo "domain2: ${{ vars.DOMAIN }}"
           echo "domain3: ${{ env.vars.DOMAIN }}"
           echo "domain4: ${{ env }}"
+          echo "domain4.1: ${{ env.staging }}"
+          echo "domain4.2: ${{ env.DOMAIN }}"
           echo "domain5: ${{ vars }}"
           echo "domain6: ${{ env.vars }}"
           echo "domain7: ${{ vars.env }}"
