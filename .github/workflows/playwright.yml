@@ -1,4 +1,7 @@
 name: Playwright Tests
+env:
+  DOMAIN: ${{ vars.DOMAIN }}
+  TENANT: ${{ vars.TENANT }}
 on:
   push:
     branches: [ main, master ]
@@ -18,9 +21,6 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
-        env:
-          DOMAIN: ${{ vars.DOMAIN }}
-          TENANT: ${{ vars.TENANT }}
         run: npx playwright test
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
