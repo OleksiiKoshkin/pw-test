@@ -11,6 +11,7 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - name: Use variables
         env:
