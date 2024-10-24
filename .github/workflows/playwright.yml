@@ -24,11 +24,12 @@ jobs:
           echo "TENANT: $TENANT"
       - name: Test domain is not set
         run: |
-          if [ -z "$$DOMAIN" ]
+          if [ -z "$DOMAIN1" ]
             then
-              echo "not defined"
-          else
+              echo "Domain is not defined"
               exit 1
+            else
+              echo "Domain is defined"
           fi
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
