@@ -1,0 +1,37 @@
+{
+  "name": "fintastic-e2e",
+  "version": "1.0.0",
+  "description": "Testing UI of Fintastic app",
+  "keywords": [
+    "testing",
+    "playwright",
+    "e2e",
+    "fintastic"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.48.1",
+    "dotenv": "^16.4.5",
+    "playwright": "^1.48.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.7",
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
+    "@typescript-eslint/parser": "^8.10.0",
+    "eslint": "^8.57.1",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
+  },
+  "scripts": {
+    "format": "npx prettier --write .",
+    "lint": "eslint '**/*.{js,ts}'",
+    "lint:fix": "eslint --fix '**/*.{js,ts}'",
+    "test": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:headless": "playwright test",
+    "test:debug": "PWDEBUG=1 playwright test",
+    "prepare": "playwright install chromium && playwright install-deps chromium"
+  }
+}

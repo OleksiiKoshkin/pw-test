@@ -1,0 +1,62 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nx/enforce-module-boundaries": [
+          "off",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": ["*"]
+              }
+            ]
+          }
+        ],
+        "quotes": ["error", "single", "avoid-escape"],
+        "object-curly-spacing": ["warn", "always"],
+        "max-len": [
+          "warn",
+          {
+            "code": 120,
+            "ignoreStrings": true,
+            "ignoreTemplateLiterals": true,
+            "ignoreComments": true
+          }
+        ],
+        "no-plusplus": [
+          "error",
+          {
+            "allowForLoopAfterthoughts": true
+          }
+        ],
+        "no-param-reassign": [
+          "warn",
+          {
+            "props": true,
+            "ignorePropertyModificationsFor": ["state"]
+          }
+        ],
+        "arrow-body-style": ["error", "as-needed"],
+        "arrow-parens": ["error", "always"],
+        "import/prefer-default-export": "off",
+        "import/no-unresolved": "off",
+        "react/require-default-props": "off",
+        "import/no-extraneous-dependencies": "off"
+      }
+    }
+  ]
+}
