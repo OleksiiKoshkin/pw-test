@@ -1,13 +1,10 @@
 name: Playwright Tests
-env:
-  DOMAIN: ${{ secrets.DOMAIN }}
-  TENANT: ${{ secrets.TENANT }}
-  TEST: "test string"
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        description: Select the environment
 jobs:
   test:
     timeout-minutes: 60
