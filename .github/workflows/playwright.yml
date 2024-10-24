@@ -15,14 +15,16 @@ jobs:
     steps:
       - name: Use variables
         env:
+          ENV_NAME: ${{ inputs.environment }}
           DOMAIN: ${{ secrets.DOMAIN }}
           TENANT: ${{ secrets.TENANT }}
           TEST: "test string"
         run: |
+          echo "ENV_NAME: $ENV_NAME"
           echo "ENV: $DOMAIN"
           echo "DOMAIN: $DOMAIN"
           echo "TENANT: $TENANT"
-          echo "TEST: TEST"
+          echo "TEST: $TEST"
       - name: get-env-var
         run: echo "Environment is:$DOMAIN"
       - uses: actions/checkout@v4
