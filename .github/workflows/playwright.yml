@@ -25,18 +25,25 @@ jobs:
 
       - name: Check domain set
         run: |
-          if [[ "${{ secrets.DOMAIN1 }}" == "" ]]; then exit 1; else echo "OK"; fi
+          if [[ "${{ secrets.DOMAIN }}" == "" ]]; then exit 1; else echo "OK"; fi
 
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+
       - name: Install dependencies
         run: npm ci
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+
       - name: Run Playwright tests
+        env:
+          DOMAIN: ${{ secrets.DOMAIN }}
+          TENANT: ${{ secrets.TENANT }}
         run: npx playwright test
+
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
