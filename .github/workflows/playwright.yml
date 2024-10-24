@@ -8,10 +8,16 @@ on:
   pull_request:
     branches: [ main, master ]
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Use variables
+      run: |
+        echo "domain: $DOMAIN"
+        echo "tenant: $TENANT"
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
