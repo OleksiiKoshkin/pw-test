@@ -6,3 +6,4 @@ playwright-report/
 .idea
 .env
 .env-*
+!.env-template
