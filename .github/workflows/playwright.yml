@@ -1,6 +1,6 @@
 name: Playwright Tests
 env:
-  DOMAIN: ${{ env.DOMAIN }}
+  DOMAIN: ${{ secrets.DOMAIN }}
   TENANT: ${{ vars.TENANT }}
   TEST: "test string"
 on:
