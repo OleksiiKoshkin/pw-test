@@ -1,7 +1,7 @@
 name: Playwright Tests
 env:
   DOMAIN: ${{ secrets.DOMAIN }}
-  TENANT: ${{ vars.TENANT }}
+  TENANT: ${{ secrets.TENANT }}
   TEST: "test string"
 on:
   push:
@@ -22,14 +22,9 @@ jobs:
           echo "domain: $DOMAIN"
           echo "domain2.1: ${{ env.DOMAIN }}"
           echo "domain2.2: ${{ env.TEST }}"
-          echo "domain2: ${{ vars.DOMAIN }}"
+          echo "domain2: ${{ secrets.DOMAIN }}"
           echo "domain3: ${{ env.vars.DOMAIN }}"
-          echo "domain4: ${{ env }}"
-          echo "domain4.1: ${{ env.staging }}"
-          echo "domain4.2: ${{ env.DOMAIN }}"
-          echo "domain5: ${{ vars }}"
-          echo "domain6: ${{ env.vars }}"
-          echo "domain7: ${{ vars.env }}"
+          echo "domain4: ${{ secrets }}"
           echo "tenant: $TENANT"
       - name: Failing step
         run: exit 1
