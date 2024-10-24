@@ -19,6 +19,12 @@ jobs:
       - name: Use variables
         run: |
           echo "domain: $DOMAIN"
+          echo "domain2: ${{ vars.DOMAIN }}"
+          echo "domain3: ${{ env.vars.DOMAIN }}"
+          echo "domain4: ${{ env }}"
+          echo "domain5: ${{ vars }}"
+          echo "domain6: ${{ env.vars }}"
+          echo "domain7: ${{ vars.env }}"
           echo "tenant: $TENANT"
       - name: Failing step
         run: exit 1
