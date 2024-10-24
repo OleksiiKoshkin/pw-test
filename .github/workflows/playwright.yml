@@ -13,21 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     steps:
-      - name: get-env-var
-        run: echo "Environment is:$URL"
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
       - name: Use variables
         env:
           DOMAIN: ${{ secrets.DOMAIN }}
           TENANT: ${{ secrets.TENANT }}
           TEST: "test string"
         run: |
+          echo "ENV: $DOMAIN"
           echo "DOMAIN: $DOMAIN"
           echo "TENANT: $TENANT"
           echo "TEST: TEST"
+      - name: get-env-var
+        run: echo "Environment is:$DOMAIN"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
       - name: Test domain is not set
         run: exit 1
         if: ${{ !env.DOMAIN }}
