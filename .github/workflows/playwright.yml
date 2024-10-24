@@ -2,6 +2,7 @@ name: Playwright Tests
 env:
   DOMAIN: ${{ vars.DOMAIN }}
   TENANT: ${{ vars.TENANT }}
+  TEST: "test string"
 on:
   push:
     branches: [ main, master ]
@@ -19,6 +20,8 @@ jobs:
       - name: Use variables
         run: |
           echo "domain: $DOMAIN"
+          echo "domain2.1: ${{ env.DOMAIN }}"
+          echo "domain2.2: ${{ env.TEST }}"
           echo "domain2: ${{ vars.DOMAIN }}"
           echo "domain3: ${{ env.vars.DOMAIN }}"
           echo "domain4: ${{ env }}"
