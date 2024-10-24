@@ -16,8 +16,8 @@ jobs:
       - name: Use variables
         env:
           ENV_NAME: ${{ inputs.environment }}
-          DOMAIN: ${{ secrets.DOMAIN }}
-          TENANT: ${{ secrets.TENANT }}
+          DOMAIN: ${{ vars.DOMAIN }}
+          TENANT: ${{ vars.TENANT }}
         run: |
           echo "ENV_NAME: $ENV_NAME"
           echo "DOMAIN: $DOMAIN"
@@ -25,7 +25,11 @@ jobs:
 
       - name: Check domain set
         run: |
-          if [[ "${{ secrets.DOMAIN }}" == "" ]]; then exit 1; else echo "OK"; fi
+          if [[ "${{ vars.DOMAIN }}" == "" ]]; then exit 1; else echo "OK"; fi
+
+      - name: Check user set
+        run: |
+          if [[ "${{ secrets.TEST_USER }}" == "" ]]; then exit 1; else echo "OK"; fi
 
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -40,8 +44,8 @@ jobs:
 
       - name: Run Playwright tests
         env:
-          DOMAIN: ${{ secrets.DOMAIN }}
-          TENANT: ${{ secrets.TENANT }}
+          DOMAIN: ${{ vars.DOMAIN }}
+          TENANT: ${{ vars.TENANT }}
           TEST_USER: ${{ secrets.TEST_USER }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
           INCORRECT_USER: ${{ secrets.INCORRECT_USER }}
