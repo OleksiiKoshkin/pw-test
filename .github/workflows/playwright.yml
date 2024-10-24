@@ -42,6 +42,12 @@ jobs:
         env:
           DOMAIN: ${{ secrets.DOMAIN }}
           TENANT: ${{ secrets.TENANT }}
+          TEST_USER: ${{ secrets.TEST_USER }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          INCORRECT_USER: ${{ secrets.INCORRECT_USER }}
+          INCORRECT_USER_PASSWORD: ${{ secrets.INCORRECT_USER_PASSWORD }}
+          STANDARD_USER: ${{ secrets.STANDARD_USER }}
+          STANDARD_USER_PASSWORD: ${{ secrets.STANDARD_USER_PASSWORD }}
         run: npx playwright test
 
       - uses: actions/upload-artifact@v4
