@@ -18,22 +18,17 @@ jobs:
           ENV_NAME: ${{ inputs.environment }}
           DOMAIN: ${{ secrets.DOMAIN }}
           TENANT: ${{ secrets.TENANT }}
-          TEST: "test string"
         run: |
           echo "ENV_NAME: $ENV_NAME"
-          echo "ENV: $DOMAIN"
           echo "DOMAIN: $DOMAIN"
           echo "TENANT: $TENANT"
-          echo "TEST: $TEST"
-      - name: get-env-var
-        run: echo "Environment is:$DOMAIN"
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
       - name: Test domain is not set
         run: exit 1
-        if: ${{ !env.DOMAIN }}
+        if: ${{ !secrets.DOMAIN }}
 
       - name: Install dependencies
         run: npm ci
