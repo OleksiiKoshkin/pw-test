@@ -12,18 +12,12 @@ test.afterAll(async () => {
   await page.close();
 });
 
-test.describe('Check versions page performance', async () => {
-  test.describe.configure({ mode: 'serial' });
+test('Should load versions page', async () => {
+  await navigateTo(page, 'versions');
 
-  test.beforeAll(async () => {
-    await navigateTo(page, 'versions');
-  });
+  const versionsPage = new VersionsPage(page);
+  await versionsPage.waitVersionPageVisibility();
 
-  test('Should load versions page', async () => {
-    const versionsPage = new VersionsPage(page);
-    await versionsPage.waitVersionPageVisibility();
-
-    const versionsCount = await versionsPage.agGridRows.count();
-    expect(versionsCount).toBeGreaterThan(1);
-  });
+  const versionsCount = await versionsPage.agGridRows.count();
+  expect(versionsCount).toBeGreaterThan(1);
 });
