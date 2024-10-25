@@ -30,3 +30,10 @@ User `INCORRECT_USER` is used to check "failed login" flows, so you can ignore i
 To run tests in console use:
 
 `npm run test:headless` or `npm run test:headless` (is not recommended if you don't know what you're doing)
+
+
+To skip Login (auth) step on each run for local testing please use `SKIP_AUTH=true` env variable: 
+
+`SKIP_AUTH=true npm run test` (or other `npm run`s)
+
+ONLY after the first run. The framework will save the authorisation data after the first run (`projects/app-auth.ts`) and reuse it for all subsequent runs.

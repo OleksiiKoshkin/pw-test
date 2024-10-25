@@ -1,6 +1,6 @@
 import { Page, test } from '@playwright/test';
-import { testTarget } from '../../../lib/test-env';
 import { SidebarBoards } from '../../../models/sidebar/sidebar-boards';
+import { navigateTo } from '../../shared/common-utils';
 
 let page: Page;
 
@@ -14,7 +14,7 @@ test.afterAll(async () => {
 
 test.describe('Check sidebar boards', async () => {
   test.beforeAll(async () => {
-    await page.goto(`${testTarget.baseUrl}/versions`);
+    await navigateTo(page, 'versions');
   });
 
   test('Should have Boards button', async () => {

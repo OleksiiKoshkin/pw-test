@@ -1,6 +1,6 @@
 import { Page, test } from '@playwright/test';
-import { testTarget } from '../../../lib/test-env';
 import { Sidebar } from '../../../models/sidebar/sidebar';
+import { navigateTo } from '../../shared/common-utils';
 
 let page: Page;
 
@@ -16,21 +16,12 @@ test.describe('Check sidebar', async () => {
   test.describe.configure({ mode: 'serial' });
 
   test.beforeAll(async () => {
-    await page.goto(`${testTarget.baseUrl}/versions`);
+    await navigateTo(page, 'versions');
   });
+
 
   test('Should have sidebar', async () => {
     const sidebar = new Sidebar(page);
     await sidebar.getSidebar();
   });
-  //
-  // test('Should have signed in user', async () => {
-  //   const toolbar = new CernToolbar(page);
-  //   await toolbar.getLocatorText(`Signed in as:${testUser.login} (Drupal)`);
-  // });
-  //
-  // test('Should have sign out', async () => {
-  //   const toolbar = new CernToolbar(page);
-  //   await toolbar.getLocatorText('Sign out');
-  // });
 });

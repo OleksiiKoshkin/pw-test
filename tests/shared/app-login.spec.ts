@@ -1,7 +1,7 @@
 import { Page, test } from '@playwright/test';
 import { testUser } from '../../lib/test-user';
 import { AppPageContainer } from '../../models/app-page-container';
-import { loginWithPopupPost, loginWithPopupPre } from '../shared/login-utils';
+import { loginWithPopupPost, loginWithPopupPre } from './login-utils';
 
 let page: Page;
 let popup: Page;
