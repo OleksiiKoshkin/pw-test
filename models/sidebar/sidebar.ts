@@ -1,10 +1,14 @@
 import { Page } from '@playwright/test';
 
 export class Sidebar {
+  readonly versionsButton;
+  readonly boardsButton;
   private page: Page;
 
   constructor(page: Page) {
     this.page = page;
+    this.boardsButton = this.page.getByTestId('sidebar-bar-item-button-boards');
+    this.versionsButton = this.page.getByTestId('sidebar-bar-item-button-versions');
   }
 
   getSidebarSelector() {

@@ -2,6 +2,7 @@
 node_modules/
 setup/
 test-results/
+performance-results/
 playwright-report/
 .idea
 .env
