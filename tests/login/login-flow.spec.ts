@@ -48,6 +48,8 @@ test.describe('Login flow', { tag: '@login' }, async () => {
   });
 
   test('Should fail login with incorrect creds', async () => {
+    test.skip(!invalidUser.login || !invalidUser.password);
+
     await popup.fill('#username', invalidUser.login);
     await popup.fill('#password', invalidUser.password);
     await popup.getByRole('button', { name: 'Continue', exact: true }).click();

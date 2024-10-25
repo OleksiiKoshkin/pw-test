@@ -10,14 +10,20 @@ test.describe('Should pass .env', { tag: '@prerequisites' }, async () => {
     expect(testTarget.baseUrl).toBeTruthy();
   });
 
-  test('Should access creds data', async () => {
+  test('Should access creds data for main user', async () => {
     expect(testUser.login).toBeTruthy();
     expect(testUser.password).toBeTruthy();
+  });
 
-    expect(standardUser.login).toBeTruthy();
-    expect(standardUser.password).toBeTruthy();
-
+  test('[Optional] Should access creds data for invalid user', async () => {
+    test.skip(!invalidUser.login || !invalidUser.password);
     expect(invalidUser.login).toBeTruthy();
     expect(invalidUser.password).toBeTruthy();
+  });
+
+  test('[Optional] Should access creds data for standard user', async () => {
+    test.skip(!standardUser.login || !standardUser.password);
+    expect(standardUser.login).toBeTruthy();
+    expect(standardUser.password).toBeTruthy();
   });
 });
