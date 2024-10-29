@@ -10,9 +10,6 @@ import {
 
 const baseURL = process.env.DOMAIN || '';
 
-// SKIP_AUTH=true npm run test
-const skipAuth = process.env.SKIP_AUTH ?? false;
-
 /**
  * See https://playwright.dev/docs/test-configuration
  */
@@ -71,47 +68,6 @@ const config: PlaywrightTestConfig = {
     ...appAuthProject,
     ...appAllProject,
     ...appPerfProject
-    // {
-    //   name: 'config prereq',
-    //   testMatch: 'config-prereq.spec.ts'
-    // },
-    // {
-    //   name: 'login prereq',
-    //   testMatch: 'login-page-prereq.spec.ts',
-    //   dependencies: ['config prereq']
-    // },
-    // {
-    //   name: 'login',
-    //   testMatch: 'login/login-flow.spec.ts',
-    //   dependencies: ['login prereq']
-    // },
-    // {
-    //   name: 'logout',
-    //   testMatch: 'login/logout-flow.spec.ts',
-    //   dependencies: ['login prereq']
-    // },
-    // {
-    //   name: 'app auth',
-    //   testMatch: 'app-login.spec.ts', // stores auth cookies
-    //   dependencies: ['config prereq', 'login prereq']
-    // },
-    // {
-    //   name: 'app logged-in',
-    //   testMatch: 'app/**/*.spec.ts',
-    //   dependencies: ['app auth']
-    // },
-    // {
-    //   name: 'app performance',
-    //   testMatch: 'perf/**/*.spec.ts',
-    //   dependencies: ['app auth']
-    // }
-    // {
-    //   name: 'chromium',
-    //   use: {
-    //     ...devices['Desktop Chrome'],
-    //     viewport: { width: 1920, height: 1080 }
-    //   }
-    // },
   ],
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
   outputDir: './test-results'

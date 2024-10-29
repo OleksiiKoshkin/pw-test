@@ -2,60 +2,27 @@
 
 ## Description
 
-## How to Use
+End-to-end test infrastructure for testing different environments. Based on [Playwright](https://playwright.dev/) framework.
 
-1. Clone repository
-2. Install dependencies: `npm install`
-3. Create `.env` file using `.env-template`:
+### Structure
 
-```dotenv
-DOMAIN=https:// #... or http://localhost:3000 - no trailing "/" ! - for local env
-TENANT=
-TEST_USER=auto_test@fintastic.ai # login for correct user to run tests
-TEST_USER_PASSWORD=
+* [Test projects](doc/projects.md)
+* [Auth flow](doc/auth-flow.md)
+* [Performance testing](doc/performance-testing.md)
 
-INCORRECT_USER= # correct user but absent for tenant
-INCORRECT_USER_PASSWORD=
+### Local flow
 
-STANDARD_USER= # user with low permissions (not power nor modeller)
-STANDARD_USER_PASSWORD=
-```
+* [How to run locally](doc/local-run)
 
-User `INCORRECT_USER` is used to check "failed login" flows, so you can ignore it if you don't want to check them.
+### CI/CD
 
-4. Run tests with [Playwright UI](https://playwright.dev/docs/test-ui-mode):
+* TBD: CI/CD environments
+* TBD: CI/CD secrets
+* TBD: CI/CD run
+* TBD: CI/CD process artifacts
 
-```shell
-npm run test
-```
+### Best practices
 
-To run tests in console use:
-
-`npm run test:headless` or `npm run test:headless` (is not recommended if you don't know what you're doing)
-
-To skip Login (auth) step on each run for local testing please use `SKIP_AUTH=true` env variable:
-
-```shell
-SKIP_AUTH=true npm run test
-```` 
-
-(or other `npm run`s)
-
-ONLY after the first run. The framework will save the authorisation data after the first run (`projects/app-auth.ts`)
-and reuse it for all subsequent runs.
-
-### Performance testing
-
-To run only performance tests you can use
-
-```shell
-SKIP_AUTH=true npm run test perf
-```
-
-or
-
-```shell
-SKIP_AUTH=true npm run test:headless perf
-```
-
-to see results in the console. Reports will be stored in `performance-results` folder.
+* TBD: New project/scenario
+* TBD: Setup and teardown
+* TBD: Branching policy
