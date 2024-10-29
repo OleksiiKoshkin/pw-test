@@ -66,4 +66,5 @@ If you run that in console, you can see a table like that:
 
 ![screenshot](img/perf.png)
 
-So, the idea is start measurement, wait till result, end measurement, hardcode desired time with `expect`.
+The standard approach here is to run the performance tests locally several times to collect average data in
+the `performance-results` folder, and then use these values in `expect` evaluations.

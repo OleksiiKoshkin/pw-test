@@ -16,8 +16,8 @@ Or download `playwright-perf.zip` artifact and analyze raw data (JSON, text and 
 
 ![screenshot](img/ci-cd-perf-3.png)
 
-But this usually ha very little sense because test runner keeps data only for single run (except you'll run test
-multiple times in a single suite).
+But this usually there are very little sense because test runner keeps data only for single run (except you'll code test
+run multiple times in a single suite).
 
 The standard approach here is to run the performance tests locally several times to collect average data in
 the `performance-results` folder, and then use these values in `expect` evaluations.

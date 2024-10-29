@@ -9,11 +9,11 @@ framework.
 
 * [Test projects](doc/projects.md)
 * [Auth flow](doc/auth-flow.md)
-* [Performance testing](doc/performance-testing.md)
 
 ### Local flow
 
 * [How to run locally](doc/local-run.md)
+* [Performance testing](doc/performance-testing.md)
 
 ### CI/CD
 
