@@ -64,6 +64,6 @@ test.describe('Check versions page performance', async ({ page, performance }) =
 
 If you run that in console, you can see a table like that:
 
-![screenshot](./perf.png)
+![screenshot](img/perf.png)
 
 So, the idea is start measurement, wait till result, end measurement, hardcode desired time with `expect`.

@@ -26,7 +26,7 @@ User `STANDARD_USER` is for non-power user flows (not implemented yet).
 npm run test
 ```
 
-![screenshot](./local-ui.png)
+![screenshot](img/local-ui.png)
 
 ALl the test suites are tagged, so you can select desired tests.
 
@@ -36,14 +36,14 @@ To run tests in console use:
 
 `npm run test:headless` or `npm run test:headed` (is not recommended if you don't know what you're doing)
 
-![screenshot](./local-console.png)
+![screenshot](img/local-console.png)
 
 To open last result run 
 ```shell
 npm run report
 ```
 
-![screenshot](./local-report.png)
+![screenshot](img/local-report.png)
 
 ### Skip login
 
