@@ -2,7 +2,8 @@
 
 ## Description
 
-End-to-end test infrastructure for testing different environments. Based on [Playwright](https://playwright.dev/) framework.
+End-to-end test infrastructure for testing different environments. Based on [Playwright](https://playwright.dev/)
+framework.
 
 ### Structure
 
@@ -16,12 +17,11 @@ End-to-end test infrastructure for testing different environments. Based on [Pla
 
 ### CI/CD
 
-* TBD: CI/CD environments
-* TBD: CI/CD secrets
-* TBD: CI/CD run
-* TBD: CI/CD process artifacts
+* [How to prepare CI/CD](doc/ci-cd-environments.md)
+* [How to access results on CI/CD](doc/ci-cd-results.md)
+* [How to access results on CI/CD - performance tests](doc/ci-cd-results-performance.md)
 
-### Best practices
+### Best practices | Recommendations
 
 * TBD: New project/scenario
 * TBD: Setup and teardown
