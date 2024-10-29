@@ -52,7 +52,7 @@ export const appPerfProject: ProjectConfig[] = [
   {
     name: 'app performance',
     testMatch: 'perf/**/*.spec.ts',  // <-- all the files and subfolders
-    dependencies: skipAuth ? [] : ['app auth']
+    dependencies: checkSkipAuth() ? [] : ['app auth']
   }
 ];
 ```

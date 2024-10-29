@@ -7,6 +7,7 @@ import {
   globalPrerequisitesProject,
   loginFlowProject
 } from './projects';
+import { outDir, setupStateFile, testsDir } from './lib/config';
 
 const baseURL = process.env.DOMAIN || '';
 
@@ -14,7 +15,7 @@ const baseURL = process.env.DOMAIN || '';
  * See https://playwright.dev/docs/test-configuration
  */
 const config: PlaywrightTestConfig = {
-  testDir: './tests',
+  testDir: testsDir,
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,
   expect: {
@@ -34,18 +35,6 @@ const config: PlaywrightTestConfig = {
   maxFailures: process.env.CI ? 10 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
-  // reporter: [
-  //   ['list'],
-  //   [
-  //     'html',
-  //     {
-  //       open: process.env.CI ? 'never' : 'on-failure',
-  //     },
-  //   ],
-  // ],
-  /* See https://playwright.dev/docs/test-advanced#global-setup-and-teardown */
-  // globalSetup: process.env.SKIP_AUTH ? '' : './lib/global-setup',
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions */
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 10 * 1000,
@@ -59,7 +48,7 @@ const config: PlaywrightTestConfig = {
     // screenshot: 'only-on-failure',
     viewport: { width: 1920, height: 1080 },
     /* See https://playwright.dev/docs/auth#reuse-signed-in-state */
-    storageState: './setup/storage-state.json'
+    storageState: setupStateFile
   },
   /* Configure projects for major browsers. */
   projects: [
@@ -70,7 +59,7 @@ const config: PlaywrightTestConfig = {
     ...appPerfProject
   ],
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  outputDir: './test-results'
+  outputDir: outDir
 };
 
 export default config;

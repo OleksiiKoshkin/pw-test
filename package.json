@@ -29,6 +29,7 @@
     "format": "npx prettier --write .",
     "lint": "eslint '**/*.{js,ts}'",
     "lint:fix": "eslint --fix '**/*.{js,ts}'",
+    "report": "playwright show-report",
     "test": "playwright test --ui",
     "test:headed": "playwright test --headed",
     "test:headless": "playwright test",

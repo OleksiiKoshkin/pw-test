@@ -36,6 +36,19 @@ To run tests in console use:
 
 `npm run test:headless` or `npm run test:headed` (is not recommended if you don't know what you're doing)
 
+![screenshot](./local-console.png)
+
+To open last result run 
+```shell
+npm run report
+```
+
+![screenshot](./local-report.png)
+
+### Skip login
+
+(See [Auth flow](./auth-flow.md) page for details)
+
 To skip Login (auth) step on each run for local testing use `SKIP_AUTH=true` env variable:
 
 ```shell
