@@ -6,6 +6,11 @@ To run only performance tests you can use
 ```shell
 SKIP_AUTH=true npm run test perf
 ```
+(or just
+```shell
+npm run test perf
+```
+if you don't want reuse login/not yet logged in - [read more](auth-flow.md))
 
 or
 
