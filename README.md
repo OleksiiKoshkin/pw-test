@@ -12,7 +12,7 @@ End-to-end test infrastructure for testing different environments. Based on [Pla
 
 ### Local flow
 
-* [How to run locally](doc/local-run)
+* [How to run locally](doc/local-run.md)
 
 ### CI/CD
 
