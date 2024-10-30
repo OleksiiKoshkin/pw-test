@@ -23,6 +23,6 @@ framework.
 
 ### Best practices | Recommendations
 
-* TBD: New project/scenario
+* [New project/scenario](doc/practices-new-project.md)
 * TBD: Setup and teardown
 * TBD: Branching policy
