@@ -16,11 +16,13 @@ INCORRECT_USER_PASSWORD=
 STANDARD_USER= # user with low permissions (not power nor modeller)
 STANDARD_USER_PASSWORD=
 ```
-Note: 
+
+Note:
 User `INCORRECT_USER` is used to check "failed login" flows, so you can ignore it if you don't want to check them.
 User `STANDARD_USER` is for non-power user flows (not implemented yet).
 
-4. Run tests with [Playwright UI](https://playwright.dev/docs/test-ui-mode) (do not forget to run local app for local environment):
+4. Run tests with [Playwright UI](https://playwright.dev/docs/test-ui-mode) (do not forget to run local app for local
+   environment):
 
 ```shell
 npm run test
@@ -38,7 +40,8 @@ To run tests in console use:
 
 ![screenshot](img/local-console.png)
 
-To open last result run 
+To open last result run
+
 ```shell
 npm run report
 ```

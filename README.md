@@ -5,15 +5,10 @@
 End-to-end test infrastructure for testing different environments. Based on [Playwright](https://playwright.dev/)
 framework.
 
-### Structure
-
-* [Test projects](doc/projects.md)
-* [Auth flow](doc/auth-flow.md)
-
-### Local flow
+## Starting point
 
 * [How to run locally](doc/local-run.md)
-* [Performance testing](doc/performance-testing.md)
+* [How to run on GitHub](doc/ci-cd-run.md)
 
 ### CI/CD
 
@@ -21,8 +16,21 @@ framework.
 * [How to access results on CI/CD](doc/ci-cd-results.md)
 * [How to access results on CI/CD - performance tests](doc/ci-cd-results-performance.md)
 
+## Technical details
+
+### Test projects
+
+* [Test projects](doc/projects.md)
+* [Auth flow](doc/auth-flow.md)
+
+### Performance testing
+
+* [Performance testing](doc/performance-testing.md)
+
+
 ### Best practices | Recommendations
 
-* [New project/scenario](doc/practices-new-project.md)
-* TBD: Setup and teardown
-* TBD: Branching policy
+* [How to create a new project/scenario](doc/practices-new-project.md)
+* [Organisation of tests: general principles](doc/setup.md)
+* [Branching policy and testing new features](doc/branching.md)
+* TBD: environment-related tests

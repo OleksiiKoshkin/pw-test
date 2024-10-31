@@ -3,7 +3,7 @@
 ## Test projects
 
 1. All the tests are composed in to [_projects_](https://playwright.dev/docs/test-projects) under
-`projects` folder. There is `types.ts` which includes the list of project's names:
+   `projects` folder. There is `types.ts` which includes the list of project's names:
 
 ```ts
 export type ProjectNames = |
@@ -47,6 +47,7 @@ export const loginFlowProject: ProjectConfig[] = [
 ```
 
 Wildcards could be used as well:
+
 ```ts
 export const appPerfProject: ProjectConfig[] = [
   {
@@ -68,27 +69,32 @@ import {
   loginFlowProject
 } from './projects'; // <-- index.ts
 // ...
-  projects: [
+projects: [
   ...globalPrerequisitesProject,
   ...loginFlowProject,
   ...appAuthProject,
   ...appAllProject,
   ...appPerfProject
-  ]
+]
 ```
 
 There are some predefined dependencies: `config prereq` and `app auth`
 
 ### Config prereq
 
-Test suite is in `tests/shared/config-prereq.spec.ts` and it checks global config: `.env` file or CI/CD variables, especially application URL, tenant, user(s) credentials.
+Test suite is in `tests/shared/config-prereq.spec.ts` and it checks global config: `.env` file or CI/CD variables,
+especially application URL, tenant, user(s) credentials.
 It has to be called on the beginning of every test, so it usually declared as a dependency:
 
 ```ts
 {
-    name: 'app auth',
-    testMatch: 'app-auth.spec.ts',
-    dependencies: ['config prereq']
+  name: 'app auth',
+    testMatch
+:
+  'app-auth.spec.ts',
+    dependencies
+:
+  ['config prereq']
 }
 ```
 

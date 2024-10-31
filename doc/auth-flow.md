@@ -81,4 +81,5 @@ Then you can run for example performance tests:
 SKIP_AUTH=true npm run test:headless perf
 ```
 
-**Warning:** The credentials are stored in a JSON file. They have some TTL, so if your tests start to fail, delete this file and repeat step 1.
+**Warning:** The credentials are stored in a JSON file. They have some TTL, so if your tests start to fail, delete this
+file and repeat step 1.

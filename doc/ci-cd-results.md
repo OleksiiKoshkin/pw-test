@@ -1,6 +1,6 @@
 # Fintastic e2e: accessing CI/CD test results
 
-### GitHub Console 
+### GitHub Console
 
 There are several ways to reach the test results. First, just reading the console:
 
@@ -10,13 +10,13 @@ which displays text console:
 
 ![screenshot](img/ci-cd-test-results-1.png)
 
-next, 
+next,
 
 ![screenshot](img/ci-cd-test-results-2.png)
 
 You can download log or view raw data. Not too user-friendly but fast and effective.
 
-### Playwright trace player
+### Local Playwright trace player
 
 Also, you can download the test artifacts:
 
@@ -42,3 +42,10 @@ npx playwright show-report %path_to_a_folder_with_downloaded_report%
 ```
 
 (if Playwright is not installed please install it)
+
+Read more: [Trace viewer](https://playwright.dev/docs/trace-viewer).
+
+### Online player
+
+You can use [Playwright's online player](https://trace.playwright.dev/)
+

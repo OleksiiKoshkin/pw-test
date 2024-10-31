@@ -18,7 +18,7 @@ Secrets: `TEST_USER`, `TEST_USER_PASSWORD`
 Optional secrets (for detailed login flow
 tests): `INCORRECT_USER`, `INCORRECT_USER_PASSWORD`, `STANDARD_USER`, `STANDARD_USER_PASSWORD`
 
-After that, you will be able to select one of the flows on desired environment:
+After that, you will be able to [run the flow](ci-cd-run.md).
 
 ![screenshot](img/ci-cd-run.png)
 

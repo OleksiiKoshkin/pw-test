@@ -180,7 +180,7 @@ You can, and you should, use [tags](https://playwright.dev/docs/test-annotations
 navigation and running the test more simple and manageable:
 
 ```ts
-test.describe('Login flow', { tag: ['@login', '@login-flow'] }, async () => { 
+test.describe('Login flow', { tag: ['@login', '@login-flow'] }, async () => {
   //...
 });
 ```
