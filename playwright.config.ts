@@ -8,8 +8,9 @@ import {
   loginFlowProject
 } from './projects';
 import { outDir, setupStateFile, testsDir } from './lib/config';
+import { testTarget } from './lib/test-env';
 
-const baseURL = process.env.DOMAIN || '';
+const baseURL = testTarget.baseUrl;
 
 /**
  * See https://playwright.dev/docs/test-configuration

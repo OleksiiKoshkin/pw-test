@@ -12,7 +12,7 @@ framework.
 
 ### CI/CD
 
-* [How to prepare CI/CD](doc/ci-cd-environments.md)
+* [Setting up CI/CD](doc/ci-cd-environments.md)
 * [How to access results on CI/CD](doc/ci-cd-results.md)
 * [How to access results on CI/CD - performance tests](doc/ci-cd-results-performance.md)
 
@@ -27,10 +27,9 @@ framework.
 
 * [Performance testing](doc/performance-testing.md)
 
-
 ### Best practices | Recommendations
 
 * [How to create a new project/scenario](doc/practices-new-project.md)
 * [Organisation of tests: general principles](doc/setup.md)
 * [Branching policy and testing new features](doc/branching.md)
-* TBD: environment-related tests
+* [Environment-depending testing](doc/env-dependent-testing.md)
