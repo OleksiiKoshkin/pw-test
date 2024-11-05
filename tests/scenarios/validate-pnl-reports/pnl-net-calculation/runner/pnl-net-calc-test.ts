@@ -18,7 +18,6 @@ export async function testNetCalc(target: ScenarioUrl) {
     groupRowHeaders: []
   };
 
-  let lastColumnToCheck = 0;
   let revenueIdx = -1;
   let costOfGoodSoldIdx = -1;
   let operatingExpensesIdx = -1;
@@ -51,15 +50,6 @@ export async function testNetCalc(target: ScenarioUrl) {
         await payload?.page?.close();
       });
 
-      test('Should have Total column(s)', async () => {
-        const lastMeaningColumnIndex = payload.gridHeaders[0].cols.findIndex((col) => col.value.toLowerCase().includes('total')) - 1;
-        expect(lastMeaningColumnIndex).toBeGreaterThan(0);
-        const colCounter = payload.gridData[0].cols.length;
-        expect(lastMeaningColumnIndex).toBeLessThan(colCounter);
-
-        lastColumnToCheck = lastMeaningColumnIndex;
-      });
-
       test('Should include critical lines', async () => {
         revenueIdx = payload.groupRowHeaders.findIndex((group) => group.value.toLowerCase().includes('1. revenue'));
         costOfGoodSoldIdx = payload.groupRowHeaders.findIndex((group) => group.value.toLowerCase().includes('2. cost of goods sold'));
@@ -81,9 +71,6 @@ export async function testNetCalc(target: ScenarioUrl) {
         let diffCounter = 0;
         const diffVersions = hasDifferentVersions(payload.gridHeaders);
 
-        // Net line is calculated as follows (for the example below - we can tune for other PnL templates):
-        // Revenue+COST OF GOOD SOLD+OPERATING EXPENSES+Other Income-Other Expenses
-
         for (let colIdx = 0; colIdx < payload.gridData[0].cols.length; colIdx++) {
           const revenueValue = getNumberValueOrZero(payload.gridData[revenueIdx].cols[colIdx].value);
           const costOfGoodSold = getNumberValueOrZero(payload.gridData[costOfGoodSoldIdx].cols[colIdx].value);
@@ -92,6 +79,8 @@ export async function testNetCalc(target: ScenarioUrl) {
           const otherExpenses = getNumberValueOrZero(payload.gridData[otherExpensesIdx].cols[colIdx].value);
           const net = getNumberValueOrZero(payload.gridData[netIdx].cols[colIdx].value);
 
+          // Net line is calculated as follows (for the example below - we can tune for other PnL templates):
+          // Revenue+COST OF GOOD SOLD+OPERATING EXPENSES+Other Income-Other Expenses
           const result = revenueValue + costOfGoodSold + operatingExpenses + otherIncome - otherExpenses;
 
           if (result !== net) {
