@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 
-export class ARRReport {
-  readonly widgetId = 'board-widget-arr';
+export class PnlReportWidget {
+  readonly widgetId = 'board-widget-pnl_vendor';
   readonly reportContainer: Locator;
   private page: Page;
 

@@ -2,18 +2,18 @@ import { expect, Page, test } from '@playwright/test';
 import { navigateTo } from '../../../shared/common-utils';
 import { scenarioTarget } from '../target';
 import { BoardPage } from '../../../../models/board-page';
-import { ARRReport } from '../models/arr-report-model';
-import { extractDataFromAgGrid, GridData, GridHeaders } from '../../helpers/ag-grid-helpers';
-import { AgGridReportModel } from '../../helpers/ag-grid-report-model';
+import { extractDataFromAgGrid, GridData, GridHeaders } from '../../ag-grid/ag-grid-helpers';
+import { AgGridReportModel } from '../../ag-grid/ag-grid-report-model';
 import { ScenarioUrl } from '../../../shared/types';
-import { getHeaderText, hasDifferentVersions } from '../../helpers/headers-helper';
+import { getHeaderText, hasDifferentVersions } from '../../helpers/headers-helpers';
+import { ReportWidget } from '../../models/report-widget-model';
 
 export async function testArrTarget(target: ScenarioUrl) {
   test.describe(`Check ${target.name}`, async () => {
     test.describe.configure({ mode: 'serial' });
 
     let page: Page;
-    let report: ARRReport;
+    let reportWidget: ReportWidget;
     let reportGrid: AgGridReportModel;
 
     const gridData: GridData = [];
@@ -38,15 +38,15 @@ export async function testArrTarget(target: ScenarioUrl) {
       expect(boardTitle).toBeDefined();
       expect(boardTitle.trim()).toBe(scenarioTarget.specific!.boardTitle);
 
-      report = new ARRReport(page);
+      reportWidget = new ReportWidget(page, 'board-widget-arr');
     });
 
     test('Should load report widget', async () => {
-      await report.waitReportVisibility();
+      await reportWidget.waitReportWidgetVisibility();
     });
 
     test('Should load report grid', async () => {
-      reportGrid = new AgGridReportModel(report.reportContainer);
+      reportGrid = new AgGridReportModel(reportWidget.reportContainer);
       await reportGrid.waitGridVisibility();
     });
 
@@ -65,7 +65,7 @@ export async function testArrTarget(target: ScenarioUrl) {
     });
 
     test('Should collect all the data from grid', async () => {
-      await extractDataFromAgGrid(page, report, gridData, gridHeaders);
+      await extractDataFromAgGrid(page, reportWidget, gridData, gridHeaders);
     });
 
     test('Data should exist and have correct shape', async () => {
@@ -130,7 +130,7 @@ export async function testArrTarget(target: ScenarioUrl) {
           diffCounter += 1;
         }
 
-        expect.soft(netValue, `NET ${netValue} !== TOP ${currentTopValue} (${netColumnHeader}) - (${currentColumnHeader})`).toBe(currentTopValue);
+        expect.soft(netValue, `${i}. NET ${netValue} !== TOP ${currentTopValue} (${netColumnHeader} - ${currentColumnHeader})`).toBe(currentTopValue);
       }
 
       expect(diffCounter, `ARR Report has ${diffCounter} gaps on NET-TOP pairs (out of ${lastColumnToCheck} total)`).toBe(0);

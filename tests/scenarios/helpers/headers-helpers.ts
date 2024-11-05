@@ -1,4 +1,4 @@
-import { GridHeaders } from './ag-grid-helpers';
+import { GridHeaders } from '../ag-grid/ag-grid-helpers';
 
 export const hasDifferentVersions = (gridHeaders: GridHeaders) => {
   if (!gridHeaders || gridHeaders.length === 0) {

@@ -1,11 +1,10 @@
 import { test } from '@playwright/test';
 import { scenarioTarget } from './target';
-import { testArrTarget } from './runner/arr-accuracy-test';
-import { checkScenarioEnvironment } from '../helpers/prereq-helpers';
+import { checkScenarioEnvironment } from '../../helpers/prereq-helpers';
 
 checkScenarioEnvironment(scenarioTarget);
 
-test.describe(`Check ARR report numbers (${scenarioTarget.targets.length})`, { tag: ['@scenario', '@arr_report'] }, async () => {
+test.describe(`Check PNL report lines/numbers (${scenarioTarget.targets.length})`, { tag: ['@scenario', '@pnl_report'] }, async () => {
   test.describe.configure({ mode: 'parallel' });
 
   scenarioTarget.targets.forEach((target) => {

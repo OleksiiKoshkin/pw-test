@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { AgGridReportModel } from './ag-grid-report-model';
-import { ARRReport } from '../validate-arr-accuracy/models/arr-report-model';
+import { ReportWidget } from '../models/report-widget-model';
 
 export type GridDataCol = {
   colId: string
@@ -231,7 +231,7 @@ export const scanVisibleHeaders = async (headerRowsContainer: Locator, mutableHe
 
 export const extractDataFromAgGrid = async (
   page: Page,
-  report: ARRReport,
+  report: ReportWidget,
   mutableData: GridData,
   mutableHeadersData: GridHeaders) => {
 
