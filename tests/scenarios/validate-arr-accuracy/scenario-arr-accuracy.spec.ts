@@ -17,7 +17,7 @@ const gridHeaders: GridHeaders = [];
 
 if (isCiCd) {
   if (!isTargetDomain(scenarioTarget.domain)) {
-    throw new Error('Invalid environment settings (domain!');
+    throw new Error('Invalid environment settings (domain)!');
   }
   if (!isTargetTenant(scenarioTarget.tenant)) {
     throw new Error('Invalid environment settings (tenant)!');

@@ -26,11 +26,30 @@ test.describe('Check versions page performance', async () => {
 
 ![screenshot](img/conditional-skip.png)
 
-Or, better, use utility functions:
+Or, better, use utility functions to check and skip:
+
 ```ts
 test.skip(!isTargetDomain(scenarioTarget.domain), 'Incorrect target domain');
 test.skip(!isTargetTenant(scenarioTarget.tenant), 'Incorrect target tenant');
 ```
+
+For more specific settings you can use something like that:
+
+```ts
+if (isCiCd) {
+  if (!isTargetDomain(scenarioTarget.domain)) {
+    throw new Error('Invalid environment settings (domain)!');
+  }
+  if (!isTargetTenant(scenarioTarget.tenant)) {
+    throw new Error('Invalid environment settings (tenant)!');
+  }
+}
+
+test.skip(!isCiCd && !isTargetDomain(scenarioTarget.domain), 'Incorrect target domain!');
+test.skip(!isCiCd && !isTargetTenant(scenarioTarget.tenant), 'Incorrect target tenant!');
+```
+
+This will fail on incorrect environments CI/CD but skip on a local run.
 
 * [Read more](https://playwright.dev/docs/test-annotations#skip-a-test) about `test.skip`
 * Read more about [soft assertions](https://playwright.dev/docs/test-assertions#soft-assertions).
