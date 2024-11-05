@@ -13,6 +13,8 @@ export const whichEnvironment = {
 
 export const whichTenant = testTarget.tenant;
 
+export const isCiCd = !!process.env.CI
+
 export const isTargetDomain = (domain: DomainType) =>
   // @todo: improve check logic?
   testTarget.baseUrl.includes(domainTypes[domain]);

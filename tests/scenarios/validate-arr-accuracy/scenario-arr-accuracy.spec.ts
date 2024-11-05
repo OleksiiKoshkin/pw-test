@@ -1,32 +1,43 @@
 import { expect, Page, test } from '@playwright/test';
-import { isTargetDomain, isTargetTenant, navigateTo } from '../../shared/common-utils';
+import { isCiCd, isTargetDomain, isTargetTenant, navigateTo } from '../../shared/common-utils';
 import { scenarioTarget } from './target';
 import { BoardPage } from '../../../models/board-page';
 import { ARRReport } from './models/arr-report-model';
 import { extractDataFromAgGrid, GridData, GridHeaders } from '../helpers/ag-grid-helpers';
 import { AgGridReportModel } from '../helpers/ag-grid-report-model';
 
-test.skip(!isTargetDomain(scenarioTarget.domain), 'Incorrect target domain');
-test.skip(!isTargetTenant(scenarioTarget.tenant), 'Incorrect target tenant');
 test.describe.configure({ mode: 'serial' });
 
 let page: Page;
 let report: ARRReport;
 let reportGrid: AgGridReportModel;
 
-test.beforeAll(async ({ browser }) => {
-  page = await browser.newPage();
-  await navigateTo(page, scenarioTarget.url);
-});
-
-test.afterAll(async () => {
-  await page.close();
-});
-
 const gridData: GridData = [];
 const gridHeaders: GridHeaders = [];
 
+if (isCiCd) {
+  if (!isTargetDomain(scenarioTarget.domain)) {
+    throw new Error('Invalid environment settings (domain!');
+  }
+  if (!isTargetTenant(scenarioTarget.tenant)) {
+    throw new Error('Invalid environment settings (tenant)!');
+  }
+}
+
+test.skip(!isCiCd && !isTargetDomain(scenarioTarget.domain), 'Incorrect target domain!');
+test.skip(!isCiCd && !isTargetTenant(scenarioTarget.tenant), 'Incorrect target tenant!');
+
 test.describe('Check ARR report numbers', { tag: ['@scenario', '@arr_report'] }, async () => {
+  test.describe.configure({ mode: 'serial' });
+
+  test.beforeAll('Open page', async ({ browser }) => {
+    page = await browser.newPage();
+    await navigateTo(page, scenarioTarget.url);
+  });
+
+  test.afterAll(async () => {
+    await page.close();
+  });
 
   test('Should load board page', async () => {
 
