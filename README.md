@@ -33,3 +33,7 @@ framework.
 * [Organisation of tests: general principles](doc/setup.md)
 * [Branching policy and testing new features](doc/branching.md)
 * [Environment-depending testing](doc/env-dependent-testing.md)
+
+## Scenarios
+
+* TBD: How to write scenario

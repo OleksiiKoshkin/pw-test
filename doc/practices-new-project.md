@@ -84,6 +84,15 @@ Pay attention:
   ** `app auth`
   project (see [auth flow](auth-flow.md) for details)
 
+Third, add to `projects/index.ts` unify export:
+
+```ts
+export * from './global-prereq'
+export * from './login-flow'
+// ..
+export * from './my-cool-suite.ts' // <-- this line
+```
+
 ### Global Config
 
 Next, add your suite to `playwright.config.ts`:
@@ -95,7 +104,7 @@ Next, add your suite to `playwright.config.ts`:
   ...appAuthProject,
   ...appAllProject,
   ...appPerfProject,
-  ...myCoolSuiteProject // <--
+  ...myCoolSuiteProject // <-- this line
 ]
 ```
 

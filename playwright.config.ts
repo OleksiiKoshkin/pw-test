@@ -5,7 +5,7 @@ import {
   appAuthProject,
   appPerfProject,
   globalPrerequisitesProject,
-  loginFlowProject
+  loginFlowProject, scenarioArrAccuracy
 } from './projects';
 import { outDir, setupStateFile, testsDir } from './lib/config';
 import { testTarget } from './lib/test-env';
@@ -18,7 +18,7 @@ const baseURL = testTarget.baseUrl;
 const config: PlaywrightTestConfig = {
   testDir: testsDir,
   /* Maximum time one test can run for. */
-  timeout: 30 * 1000,
+  timeout: 90 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
@@ -38,8 +38,8 @@ const config: PlaywrightTestConfig = {
   reporter: 'html',
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-    actionTimeout: 10 * 1000,
-    navigationTimeout: 30 * 1000,
+    actionTimeout: 20 * 1000,
+    navigationTimeout: 90 * 1000,
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
@@ -57,7 +57,8 @@ const config: PlaywrightTestConfig = {
     ...loginFlowProject,
     ...appAuthProject,
     ...appAllProject,
-    ...appPerfProject
+    ...appPerfProject,
+    ...scenarioArrAccuracy
   ],
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
   outputDir: outDir

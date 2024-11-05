@@ -58,7 +58,18 @@ export const appPerfProject: ProjectConfig[] = [
 ];
 ```
 
-3. In `./playwright.config.ts` the projects are imported:
+3. Unify export is into `projects/index.ts`:
+
+```ts
+export * from './global-prereq'
+export * from './login-flow'
+export * from './app-auth'
+export * from './app-all'
+export * from './app-perf'
+export * from './scenario-arr-accuracy'
+```
+
+4. In `./playwright.config.ts` the projects are imported:
 
 ```ts
 import {

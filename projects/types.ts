@@ -5,7 +5,8 @@ export type ProjectNames = |
   'logout' |
   'app auth' |
   'app all (logged-in)' |
-  'app performance'
+  'app performance' |
+  'scenario arr accuracy numbers'
 
 export type ProjectConfig = {
   name: ProjectNames

@@ -2,6 +2,8 @@
   "include": ["tests", "./playwright.config.ts", "models"],
   "compilerOptions": {
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    "lib": ["ES2023"],
+    "noImplicitAny": false
   }
 }

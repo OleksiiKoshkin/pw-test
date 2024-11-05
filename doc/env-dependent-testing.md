@@ -26,6 +26,12 @@ test.describe('Check versions page performance', async () => {
 
 ![screenshot](img/conditional-skip.png)
 
+Or, better, use utility functions:
+```ts
+test.skip(!isTargetDomain(scenarioTarget.domain), 'Incorrect target domain');
+test.skip(!isTargetTenant(scenarioTarget.tenant), 'Incorrect target tenant');
+```
+
 * [Read more](https://playwright.dev/docs/test-annotations#skip-a-test) about `test.skip`
 * Read more about [soft assertions](https://playwright.dev/docs/test-assertions#soft-assertions).
 

@@ -9,11 +9,16 @@ export class LoginPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.loginButton = this.page.getByTestId('login-button');
+    // this.loginButton = this.page.getByTestId('login-button')
+    this.loginButton = this.page.locator('button >> nth=0')
+
     this.loginWelcome = this.page.getByTestId('login-welcome');
-    this.loginTitle = this.page.getByTestId('error-alert-title');
-    this.loginMessage = this.page.getByTestId('error-alert-message');
-    // this.loginMessage = this.page.locator('div[data-testid="login-welcome"] >> div[data-testid="error-alert-message"]');
+
+    // this.loginTitle = this.page.getByTestId('error-alert-title');
+    this.loginTitle = this.page.getByText('Welcome to fintastic');
+
+    //this.loginMessage = this.page.getByTestId('error-alert-message');
+    this.loginMessage = this.page.getByText('Please login into your account');
   }
 
   async clickLogin() {
