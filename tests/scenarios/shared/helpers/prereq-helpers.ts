@@ -1,5 +1,5 @@
-import { isCiCd, isTargetDomain, isTargetTenant } from '../../shared/common-utils';
-import { ScenarioTarget } from '../../shared/types';
+import { isCiCd, isTargetDomain, isTargetTenant } from '../../../shared/common-utils';
+import { ScenarioTarget } from '../../../shared/types';
 import { test } from '@playwright/test';
 
 export const checkScenarioEnvironment = (target: ScenarioTarget) => {

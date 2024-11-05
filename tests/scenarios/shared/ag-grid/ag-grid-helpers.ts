@@ -14,6 +14,7 @@ export type GridDataRow = {
   cols: GridDataCol[]
 }
 
+// only data, without header rows and group headers column
 export type GridData = GridDataRow[]
 
 export type GridHeaderCol = {
@@ -22,6 +23,7 @@ export type GridHeaderCol = {
   value: string
 }
 
+// header rows (column headers)
 export type GridHeaderRow = {
   rowIndex: number
   cols: GridHeaderCol[]
@@ -29,8 +31,17 @@ export type GridHeaderRow = {
 
 export type GridHeaders = GridHeaderRow[]
 
+// row headers (1st column)
+export type GridGroupRowHeader = {
+  rowIndex: number
+  rowId: string
+  value: string
+}
+
+export type GridGroupRowHeaders = GridGroupRowHeader[]
+
 // CSS selectors are xN faster than Playwright's
-export const scanVisibleCells = async (dataRows: Locator, mutableData: GridData) => {
+const scanVisibleCells = async (dataRows: Locator, mutableData: GridData) => {
 
   const currentDataPiece = await dataRows.evaluate((e) => {
 
@@ -102,6 +113,7 @@ export const scanVisibleCells = async (dataRows: Locator, mutableData: GridData)
   });
 };
 
+/*
 export const _slow_scanVisibleCells = async (dataRows: Locator, data: GridData) => {
   const rows = await dataRows.locator('css=div.ag-row');// .getByRole('row');
   const rowsCount = await rows.count();
@@ -158,8 +170,9 @@ export const _slow_scanVisibleCells = async (dataRows: Locator, data: GridData) 
     }
   }
 };
+*/
 
-export const scanVisibleHeaders = async (headerRowsContainer: Locator, mutableHeadersData: GridHeaders) => {
+const scanVisibleHeaders = async (headerRowsContainer: Locator, mutableHeadersData: GridHeaders) => {
   const currentHeadersPiece = await headerRowsContainer.evaluate((e) => {
     const currentHeaders: GridHeaders = [];
 
@@ -228,12 +241,57 @@ export const scanVisibleHeaders = async (headerRowsContainer: Locator, mutableHe
   });
 };
 
+const scanGroupRowHeaders = async (groupRowContainer: Locator, mutableGroupHeadersData: GridGroupRowHeaders) => {
+  const currentGroupRowHeadersPiece = await groupRowContainer.evaluate((e) => {
+    const currentHeaders: GridGroupRowHeaders = [];
+
+    const rows = e.querySelectorAll('div.ag-row');
+
+    rows.forEach((row) => {
+      const rowId = row.getAttribute('row-id');
+      const rowIndex = row.getAttribute('aria-rowindex');
+
+      if (!rowId) {
+        throw 'GroupRow Id not found';
+      }
+
+      if (!rowIndex || isNaN(parseInt(rowIndex))) {
+        throw 'GroupRow Index not found';
+      }
+
+      const column = row.querySelector('div[role=gridcell]');
+      const cellText = (column.textContent || '')
+        .replace(/\n/, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      currentHeaders.push({
+        rowId: rowId,
+        rowIndex: parseInt(rowIndex, 10),
+        value: cellText
+      });
+    });
+
+    return currentHeaders;
+  });
+
+  currentGroupRowHeadersPiece.forEach((row) => {
+    const existingRowIndex = mutableGroupHeadersData.findIndex((r) => r.rowId === row.rowId);
+
+    if (existingRowIndex === -1) {
+      mutableGroupHeadersData.push(row); // push all the columns
+      return;
+    }
+  });
+};
 
 export const extractDataFromAgGrid = async (
   page: Page,
   report: ReportWidget,
   mutableData: GridData,
-  mutableHeadersData: GridHeaders) => {
+  mutableHeadersData: GridHeaders,
+  mutableGroupRowHeadersData: GridGroupRowHeaders
+) => {
 
   const gridReport = new AgGridReportModel(report.reportContainer);
 
@@ -257,6 +315,8 @@ export const extractDataFromAgGrid = async (
 
     while (shouldScrollY) {
       await scanVisibleCells(gridReport.dataRows, mutableData);
+      await scanGroupRowHeaders(gridReport.groupRowContainer, mutableGroupRowHeadersData);
+
       await gridReport.stepScrollY();
       await page.waitForTimeout(100); // rows are faster
 
@@ -267,6 +327,7 @@ export const extractDataFromAgGrid = async (
       if (!shouldScrollY) {
         // scan last portion of rows
         await scanVisibleCells(gridReport.dataRows, mutableData);
+        await scanGroupRowHeaders(gridReport.groupRowContainer, mutableGroupRowHeadersData);
       }
     }
 

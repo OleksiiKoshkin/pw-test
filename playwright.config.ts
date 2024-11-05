@@ -5,7 +5,7 @@ import {
   appAuthProject,
   appPerfProject,
   globalPrerequisitesProject,
-  loginFlowProject, scenarioArrAccuracy
+  loginFlowProject, scenarioArrAccuracy, scenarioPnlLines
 } from './projects';
 import { outDir, setupStateFile, testsDir } from './lib/config';
 import { testTarget } from './lib/test-env';
@@ -58,7 +58,8 @@ const config: PlaywrightTestConfig = {
     ...appAuthProject,
     ...appAllProject,
     ...appPerfProject,
-    ...scenarioArrAccuracy
+    ...scenarioArrAccuracy,
+    ...scenarioPnlLines
   ],
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
   outputDir: outDir

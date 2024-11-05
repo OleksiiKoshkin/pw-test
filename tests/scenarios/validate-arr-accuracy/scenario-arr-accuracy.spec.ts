@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 import { scenarioTarget } from './target';
 import { testArrTarget } from './runner/arr-accuracy-test';
-import { checkScenarioEnvironment } from '../helpers/prereq-helpers';
+import { checkScenarioEnvironment } from '../shared/helpers/prereq-helpers';
 
 checkScenarioEnvironment(scenarioTarget);
 

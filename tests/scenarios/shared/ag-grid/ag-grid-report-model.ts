@@ -22,6 +22,9 @@ export class AgGridReportModel {
   readonly headersContainer: Locator;
   readonly headerRows: Locator;
 
+  readonly groupRowContainer: Locator;
+  readonly groupRows: Locator;
+
   private initialMaxHeight = 0;
   private initialMaxWidth = 0;
   private visibleHeight = 0;
@@ -57,6 +60,9 @@ export class AgGridReportModel {
 
     this.headersContainer = this.agGridWrapper.locator('css=div.ag-header-viewport ');
     this.headerRows = this.headersContainer.locator('css=div.ag-header-row');
+
+    this.groupRowContainer = this.agGridWrapper.locator('css=div.ag-pinned-left-cols-container');
+    this.groupRows = this.groupRowContainer.locator('css=div.ag-row');
   }
 
   async waitGridVisibility() {
