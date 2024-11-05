@@ -14,8 +14,15 @@ export const tenants = {
 
 export type TenantCode = keyof typeof tenants;
 
+export type ScenarioUrl = {
+  name: string,
+  url: string
+}
+
 export type ScenarioTarget = {
   tenant: TenantCode
   domain: DomainType
-  url: string
-} & Record<string, string>;
+  targets: Array<ScenarioUrl>
+
+  specific?: Record<string, string>; // +extra fields
+}
