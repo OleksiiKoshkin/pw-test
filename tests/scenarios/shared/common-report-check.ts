@@ -67,8 +67,6 @@ export async function commonReportCheck({
       payload.gridData,
       payload.gridHeaders,
       payload.groupRowHeaders);
-
-    console.log('groupRowHeaders', payload.groupRowHeaders);
   });
 
   test('Data should exist and have correct shape', async () => {

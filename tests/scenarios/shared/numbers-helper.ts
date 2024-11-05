@@ -26,3 +26,11 @@ export const getNumberValue = (maybeNumber?: string) => {
   }
   return value * signMultiplier;
 };
+
+export const getNumberValueOrZero = (maybeNumber?: string) => {
+  const result = getNumberValue(maybeNumber);
+  if (Number.isNaN(result)) {
+    return 0;
+  }
+  return result;
+};
