@@ -6,6 +6,11 @@ on:
       environment:
         type: environment
         description: Select the environment [prod acme3 only]
+      tenant:
+          acme:
+            type: boolean
+          claroty:
+            type: boolean
 
 jobs:
   test:
