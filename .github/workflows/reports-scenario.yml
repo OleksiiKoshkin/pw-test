@@ -3,14 +3,17 @@ name: Scenarios [prod acme3 only]
 on:
   workflow_dispatch:
     inputs:
-      report:
-        arr_net_top_numbers:
-          type: boolean
-        pnl_net_calculation:
-          type: boolean
-        pnl_10x_check:
-          type: boolean
-          description: PnL Check Next column < 10x prev column
+      arr_net_top_numbers:
+        description: Report ARR NET-TOP
+        required: true
+      pnl_net_calculation:
+        description: PnL Check Net calculation
+        required: true
+      pnl_10x_check:
+        description: PnL Check Next column < 10x prev column
+        required: true
+        type: boolean
+
       tenant:
         acme:
           type: boolean
