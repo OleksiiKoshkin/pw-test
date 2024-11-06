@@ -1,4 +1,4 @@
-name: Scenarios [prod acme3 only]
+name: Scenarios
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
       run_on_tenants:
         description: Tenants
         type: choice
-        default: 'all'
+        default: 'database'
         options:
           - all
           - database
@@ -16,7 +16,7 @@ on:
       run_on_env:
         description: Environments
         type: choice
-        default: 'all'
+        default: 'database'
         options:
           - all
           - database
@@ -25,7 +25,7 @@ on:
       run_scenarios:
         description: Scenarios
         type: choice
-        default: 'all'
+        default: 'database'
         options:
           - all
           - database
