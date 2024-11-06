@@ -30,6 +30,7 @@ export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
   test.describe(`${scenarioName} (${targets.length})`, { tag: ['@scenario', '@' + scenarioId] }, async () => {
     test.skip(targets.length === 0, `Targets not found for "${scenarioId}"`);
     test.describe.configure({ mode: 'parallel' });
+    test.use({ storageState: { cookies: [], origins: [] } });
 
     targets.forEach((target, targetIdx) => {
       test.describe(`Target ${targetIdx + 1}: ${target.domain}/${target.tenant}`, { tag: ['@' + target.domain, '@' + target.tenant] }, async () => {
