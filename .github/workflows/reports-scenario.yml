@@ -2,15 +2,13 @@ name: Scenarios [prod acme3 only]
 
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        type: environment
-        description: Select the environment [prod acme3 only]
-      tenant:
-          acme:
-            type: boolean
-          claroty:
-            type: boolean
+    inputs: # Example inputs
+      api:
+        type: boolean
+      worker1:
+        type: boolean
+      worker2:
+        type: boolean
 
 jobs:
   test:
