@@ -2,13 +2,22 @@ name: Scenarios [prod acme3 only]
 
 on:
   workflow_dispatch:
-    inputs: # Example inputs
-      api:
-        type: boolean
-      worker1:
-        type: boolean
-      worker2:
-        type: boolean
+    inputs:
+      report:
+        arr_net_top_numbers:
+          type: boolean
+        pnl_net_calculation:
+          type: boolean
+        pnl_10x_check:
+          type: boolean
+          description: PnL Check Next column < 10x prev column
+      tenant:
+        acme:
+          type: boolean
+        claroty:
+          type: boolean
+        aviatrix:
+          type: boolean
 
 jobs:
   test:
