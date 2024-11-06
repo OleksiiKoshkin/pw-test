@@ -5,28 +5,33 @@ on:
     inputs:
       run_on_tenants:
         description: Tenants
-        required: true
         type: choice
         default: 'all'
         options:
           - all
           - database
+          - acme
+          - claroty
+          - aviatrix
       run_on_env:
         description: Environments
-        required: true
         type: choice
         default: 'all'
         options:
           - all
           - database
+          - production
+          - staging
       run_scenarios:
         description: Scenarios
-        required: true
         type: choice
         default: 'all'
         options:
           - all
           - database
+          - arr_net_top_accuracy
+          - pnl_net_calculation
+          - pnl_10x_values_check
 
 jobs:
   test:
