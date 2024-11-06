@@ -3,44 +3,30 @@ name: Scenarios [prod acme3 only]
 on:
   workflow_dispatch:
     inputs:
-      arr_net_top_numbers:
-        description: Report ARR NET-TOP
+      run_on_tenants:
+        description: Tenants
         required: true
-        type: boolean
-      pnl_net_calculation:
-        description: PnL Check Net calculation
+        type: choice
+        default: 'all'
+        options:
+          - all
+          - database
+      run_on_env:
+        description: Environments
         required: true
-        type: boolean
-      pnl_10x_check:
-        description: PnL Check Next column < 10x prev column
+        type: choice
+        default: 'all'
+        options:
+          - all
+          - database
+      run_scenarios:
+        description: Scenarios
         required: true
-        type: boolean
-
-      acme_prod:
-        description: Run on ACME/Production
-        required: true
-        type: boolean
-      claroty_prod:
-        description: Run on Claroty/Production
-        required: true
-        type: boolean
-      aviatrix_prod:
-        description: Run on Aviatrix/Production
-        required: true
-        type: boolean
-
-      acme_staging:
-        description: Run on ACME/staging
-        required: true
-        type: boolean
-      claroty_staging:
-        description: Run on Claroty/staging
-        required: true
-        type: boolean
-      aviatrix_staging:
-        description: Run on Aviatrix/staging
-        required: true
-        type: boolean
+        type: choice
+        default: 'all'
+        options:
+          - all
+          - database
 
 jobs:
   test:
