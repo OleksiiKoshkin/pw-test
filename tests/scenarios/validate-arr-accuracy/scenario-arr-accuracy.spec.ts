@@ -1,14 +1,4 @@
-import { test } from '@playwright/test';
-import { scenarioTarget } from './target';
-import { testArrTarget } from './runner/arr-accuracy-test';
-import { checkScenarioEnvironment } from '../shared/helpers/prereq-helpers';
+import { scenarioPlayer } from '../shared';
+import { testArrNumberChains } from './arr-accuracy-test-executor';
 
-checkScenarioEnvironment(scenarioTarget);
-
-test.describe(`Check ARR report numbers (${scenarioTarget.targets.length})`, { tag: ['@scenario', '@arr_report'] }, async () => {
-  test.describe.configure({ mode: 'parallel' });
-
-  scenarioTarget.targets.forEach((target) => {
-    testArrTarget(target);
-  });
-});
+scenarioPlayer({ scenarioId: 'arr_net_top_accuracy', testExecutor: testArrNumberChains });

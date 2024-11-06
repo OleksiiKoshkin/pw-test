@@ -44,7 +44,7 @@ test.describe('Login flow', { tag: '@login' }, async () => {
     await popup.waitForSelector('#password');
     const continueButton = popup.locator('button[type="submit"][name="action"]');
     expect(continueButton).toBeDefined();
-    expect(await continueButton.evaluate((node: HTMLElement) => node.innerText)).toBe('Continue');
+    expect(await continueButton.evaluate((node) => node.innerText)).toBe('Continue');
   });
 
   test('Should fail login with incorrect creds', async () => {

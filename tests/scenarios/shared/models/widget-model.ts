@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 
-export class ReportWidget {
-  readonly reportContainer: Locator;
+export class Widget {
+  readonly targetContainer: Locator;
 
   private readonly widgetId: string;
   private readonly page: Page;
@@ -10,10 +10,10 @@ export class ReportWidget {
     this.page = page;
     this.widgetId = reportWidgetId;
 
-    this.reportContainer = this.page.getByTestId(this.widgetId);
+    this.targetContainer = this.page.getByTestId(this.widgetId);
   }
 
-  async waitReportWidgetVisibility() {
-    await this.reportContainer.waitFor({ state: 'visible' });
+  async waitWidgetVisibility() {
+    await this.targetContainer.waitFor({ state: 'visible' });
   }
 }

@@ -1,48 +1,15 @@
 /* eslint-disable no-param-reassign */
-import { expect, Page, test } from '@playwright/test';
-import { BoardPage } from '../../../models/board-page';
-import { ReportWidget } from './models/report-widget-model';
-import { AgGridReportModel } from './ag-grid/ag-grid-report-model';
-import { extractDataFromAgGrid, GridData, GridGroupRowHeaders, GridHeaders } from './ag-grid/ag-grid-helpers';
+import { expect, test } from '@playwright/test';
+import { AgGridReportModel, extractDataFromAgGrid } from './ag-grid';
+import { CommonReportPayload, ScenarioRunContext } from './types';
 
-export type CommonReportPayload = {
-  page: Page;
-  reportWidget?: ReportWidget;
-  reportGrid?: AgGridReportModel;
-  gridData: GridData;
-  gridHeaders: GridHeaders;
-  groupRowHeaders: GridGroupRowHeaders;
-}
-
-export type CommonParams = {
-  payload: CommonReportPayload,
-  reportWidgetId: string,
-  boardTitle: string,
-}
-
-export async function commonReportCheck({
-                                          payload,
-                                          reportWidgetId,
-                                          boardTitle
-                                        }: CommonParams) {
-
-  test('Should load board page', async () => {
-    const boardPage = new BoardPage(payload.page);
-    await boardPage.waitBoardPageVisibility();
-
-    const curBoardTitle = await boardPage.boardTitle.innerText();
-    expect(curBoardTitle).toBeDefined();
-    expect(curBoardTitle.trim()).toBe(boardTitle);
-
-    payload.reportWidget = new ReportWidget(payload!.page, reportWidgetId);
-  });
-
-  test('Should load report widget', async () => {
-    await payload.reportWidget?.waitReportWidgetVisibility();
+export function getReportData(params: ScenarioRunContext, payload: CommonReportPayload) {
+  test('Should reach widget', async () => {
+    expect(params.widget).toBeDefined();
   });
 
   test('Should load report grid', async () => {
-    payload.reportGrid = new AgGridReportModel(payload.reportWidget!.reportContainer);
+    payload.reportGrid = new AgGridReportModel(params.widget!.targetContainer);
     await payload.reportGrid.waitGridVisibility();
   });
 
@@ -62,8 +29,8 @@ export async function commonReportCheck({
 
   test('Should collect all the data from grid', async () => {
     await extractDataFromAgGrid(
-      payload.page,
-      payload.reportWidget!,
+      params.page!,
+      params.widget!,
       payload.gridData,
       payload.gridHeaders,
       payload.groupRowHeaders);

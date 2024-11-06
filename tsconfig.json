@@ -4,6 +4,7 @@
     "esModuleInterop": true,
     "strict": true,
     "lib": ["ES2023"],
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "resolveJsonModule": true
   }
 }

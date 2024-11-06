@@ -32,6 +32,9 @@ on:
           - arr_net_top_accuracy
           - pnl_net_calculation
           - pnl_10x_values_check
+      environment:
+        type: environment
+        description: Select the environment
 
 jobs:
   test:

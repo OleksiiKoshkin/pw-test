@@ -1,44 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 import { AgGridReportModel } from './ag-grid-report-model';
-import { ReportWidget } from '../models/report-widget-model';
-
-export type GridDataCol = {
-  colId: string
-  colIndex: number
-  value: string
-}
-
-export type GridDataRow = {
-  rowId: string
-  rowIndex: number
-  cols: GridDataCol[]
-}
-
-// only data, without header rows and group headers column
-export type GridData = GridDataRow[]
-
-export type GridHeaderCol = {
-  headerColId: string
-  headerColIndex: number
-  value: string
-}
-
-// header rows (column headers)
-export type GridHeaderRow = {
-  rowIndex: number
-  cols: GridHeaderCol[]
-}
-
-export type GridHeaders = GridHeaderRow[]
-
-// row headers (1st column)
-export type GridGroupRowHeader = {
-  rowIndex: number
-  rowId: string
-  value: string
-}
-
-export type GridGroupRowHeaders = GridGroupRowHeader[]
+import { Widget } from '../../models';
+import { GridData, GridDataRow, GridGroupRowHeaders, GridHeaderRow, GridHeaders } from './types';
 
 // CSS selectors are xN faster than Playwright's
 const scanVisibleCells = async (dataRows: Locator, mutableData: GridData) => {
@@ -287,13 +250,13 @@ const scanGroupRowHeaders = async (groupRowContainer: Locator, mutableGroupHeade
 
 export const extractDataFromAgGrid = async (
   page: Page,
-  report: ReportWidget,
+  report: Widget,
   mutableData: GridData,
   mutableHeadersData: GridHeaders,
   mutableGroupRowHeadersData: GridGroupRowHeaders
 ) => {
 
-  const gridReport = new AgGridReportModel(report.reportContainer);
+  const gridReport = new AgGridReportModel(report.targetContainer);
 
   await gridReport.resetScroll();
   await page.waitForTimeout(100);
