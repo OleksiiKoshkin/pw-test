@@ -37,3 +37,9 @@ framework.
 ## Scenarios
 
 * TBD: How to write scenario
+* TBD: Replace separate tests with scenarios
+* TBD: Update documentation
+
+## Local Scenarios Database
+* 
+* [Setting up local database](local-db/README.md)

@@ -55,7 +55,8 @@
         "import/prefer-default-export": "off",
         "import/no-unresolved": "off",
         "react/require-default-props": "off",
-        "import/no-extraneous-dependencies": "off"
+        "import/no-extraneous-dependencies": "off",
+        "@typescript-eslint/no-explicit-any": ["warn"]
       }
     }
   ]

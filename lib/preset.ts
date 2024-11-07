@@ -13,7 +13,7 @@ export function checkSkipAuth(): boolean {
     return false;
   }
 
-  let config = null;
+  let config: unknown = null;
   try {
     // setup file exists
     if (fs.existsSync(setupStateFile)) {
@@ -23,5 +23,5 @@ export function checkSkipAuth(): boolean {
     console.error(e);
     return false;
   }
-  return Boolean(config && config.cookies && config.cookies.length > 0);
+  return Boolean(config && (config as any).cookies && (config as any).cookies.length > 0);
 }
