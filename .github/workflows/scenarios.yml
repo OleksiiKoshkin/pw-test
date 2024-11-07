@@ -6,29 +6,26 @@ on:
       run_on_tenants:
         description: Tenants
         type: choice
-        default: 'database'
+        default: 'all_possible'
         options:
-          - all
-          - database
+          - all_possible
           - acme
           - claroty
           - aviatrix
       run_on_env:
         description: Environments
         type: choice
-        default: 'database'
+        default: 'all_possible'
         options:
-          - all
-          - database
+          - all_possible
           - production
           - staging
       run_scenarios:
         description: Scenarios
         type: choice
-        default: 'database'
+        default: 'all_possible'
         options:
-          - all
-          - database
+          - all_possible
           - arr_net_top_accuracy
           - pnl_values_10x
           - pnl_net_calculation
@@ -68,7 +65,7 @@ jobs:
           TEST_USER: ${{ secrets.TEST_USER }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
 
-        run: npx playwright test scenario
+        run: npm run configure:run scenario
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}

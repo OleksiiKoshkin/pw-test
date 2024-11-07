@@ -1,5 +1,5 @@
 import * as fs from 'node:fs';
-import { setupStateFile } from './config';
+import { setupStateFile } from './config-consts';
 
 export function checkSkipAuth(): boolean {
   const skipAuth = process.env.SKIP_AUTH ?? false;

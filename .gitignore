@@ -2,6 +2,7 @@
 node_modules/
 setup/
 test-results/
+test-config/
 performance-results/
 playwright-report/
 .idea

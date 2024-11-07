@@ -1,3 +1,9 @@
+export const knownScenarios = [
+  'arr_net_top_accuracy',
+  'pnl_values_10x',
+  'pnl_net_calculation'
+];
+
 export const domainTypes = {
   production: 'app.fintastic.ai',
   staging: 'app.staging.fintastic.ai',

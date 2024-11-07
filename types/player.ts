@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { Widget } from '../models';
+import { Widget } from '../tests/scenarios/shared';
 
 export type PlayerTestSinglePageExecutorParams = {
   page: Page

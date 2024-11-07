@@ -10,7 +10,7 @@ import {
   scenarioPnlLines,
   scenarioPnlNetCalc
 } from './projects';
-import { outDir, setupStateFile, testsDir } from './lib/config';
+import { outDir, setupStateFile, testsDir } from './lib/config-consts';
 import { testTarget } from './lib/test-env';
 
 const baseURL = testTarget.baseUrl;

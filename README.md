@@ -42,4 +42,4 @@ framework.
 
 ## Local Scenarios Database
 * 
-* [Setting up local database](local-db/README.md)
+* [Setting up local database](doc/db-config.md)

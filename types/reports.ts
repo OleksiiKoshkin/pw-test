@@ -1,4 +1,4 @@
-import { AgGridReportModel, GridData, GridGroupRowHeaders, GridHeaders } from '../ag-grid';
+import { AgGridReportModel, GridData, GridGroupRowHeaders, GridHeaders } from '../tests/scenarios/shared';
 
 export type CommonReportPayload = {
   reportGrid?: AgGridReportModel;
