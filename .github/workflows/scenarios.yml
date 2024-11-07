@@ -34,7 +34,7 @@ on:
           - pnl_net_calculation
       environment:
         type: environment
-        description: [Temp] Select the environment
+        description: (Temp) Select the environment
 
 jobs:
   test:
