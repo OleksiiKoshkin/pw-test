@@ -64,6 +64,11 @@ jobs:
         env:
           TEST_USER: ${{ secrets.TEST_USER }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_SCHEMA: ${{ secrets.DB_SCHEMA }}
 
         run: npm run configure:run scenario
 
