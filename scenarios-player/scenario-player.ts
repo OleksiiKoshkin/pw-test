@@ -14,7 +14,7 @@ import { LoginPage } from '../models/login-page';
 import { AppPageContainer } from '../models/app-page-container';
 
 const onlyScenario = process.env.ONLY_SCENARIO;
-if (onlyScenario) {
+if (onlyScenario && onlyScenario !== 'all_possible') {
   console.log('Run only | Scenario', onlyScenario);
 
   if (!knownScenarios.includes(onlyScenario as KnownScenario)) {
@@ -23,7 +23,7 @@ if (onlyScenario) {
 }
 
 const onlyEnvironment = process.env.ONLY_ENVIRONMENT;
-if (onlyEnvironment) {
+if (onlyEnvironment && onlyEnvironment !== 'all_possible') {
   console.log('Run only | Environment', onlyEnvironment);
 
   if (!domainTypes[onlyEnvironment]) {
@@ -32,16 +32,13 @@ if (onlyEnvironment) {
 }
 
 const onlyTenant = process.env.ONLY_TENANT;
-if (onlyTenant) {
+if (onlyTenant && onlyTenant !== 'all_possible') {
   console.log('Run only | Tenant', onlyTenant);
 
   if (!tenants[onlyTenant]) {
     throw new Error(`No such tenant "${onlyTenant}" (from ${Object.keys(tenants).join(', ')})}`);
   }
 }
-
-console.log('env', JSON.stringify(process.env, null, 2));
-throw new Error('test fail');
 
 export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
   const targets = getConfigTargets(scenarioId);

@@ -57,10 +57,6 @@ jobs:
         run: |
           if [[ "${{ secrets.TEST_USER }}" == "" ]]; then exit 1; else echo "OK"; fi
 
-      - name: Check env set
-        run: |
-          if [[ "${{ inputs.run_on_env }}" == "production" ]]; then exit 1; else echo "ENV OK"; fi
-
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
