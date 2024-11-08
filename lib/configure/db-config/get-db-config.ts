@@ -1,5 +1,5 @@
 import pg from 'pg';
-import { RawRow } from './utils';
+import { RawDbRow } from './types';
 
 const query: string = `select 
 	scenarios.id as scenario_id,
@@ -39,6 +39,10 @@ export async function getDBConfig() {
   });
   console.log(`Connecting to "${process.env.DB_HOST || 'localhost'}"...`);
 
+  if (process.env.DB_HOST || 'localhost' === 'localhost') {
+    console.warn('Please pay attention: connection to the local database');
+  }
+
   try {
     await client.connect();
   } catch (error) {
@@ -46,7 +50,7 @@ export async function getDBConfig() {
     process.exit(-1);
   }
 
-  console.log(`Connected to PostgreSQL database "${process.env.DB_NAME}" as "${process.env.DB_USER}"`);
+  console.log(`Connected to PostgreSQL DB "${process.env.DB_NAME}" as "${process.env.DB_USER}"`);
   if (process.env.DB_SCHEMA) {
     console.log(`Setting db schema "${process.env.DB_SCHEMA}"...`);
     try {
@@ -58,7 +62,7 @@ export async function getDBConfig() {
   }
   console.log('Requesting test scenarios...\n');
 
-  let result: RawRow[] = [];
+  let result: RawDbRow[] = [];
 
   try {
     const response = await client.query(query);

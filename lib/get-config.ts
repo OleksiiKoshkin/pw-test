@@ -1,35 +1,32 @@
 import 'dotenv/config';
 import { ConfigScenario } from '../types';
-import { parseRawData } from './db-config/utils';
 import * as fs from 'node:fs';
 import { setupScenarioTargetsFile } from './config-consts';
-import { getDBConfig } from './db-config/get-db-config';
+import { getLocalDefaultScenarios } from './configure/local-config/get-local-default-config';
+import { getDbScenarios } from './configure/db-config/process-db-config';
+import { checkConfig } from './configure/utils';
 
-console.log('Getting DB config');
-console.log('=================');
-console.log('Check environment...');
+console.log('Check runtime configuration...');
+console.log('==============================');
 
-// 1. Get config from DB
-const dbConfig = await getDBConfig();
-
-// 2. Process config
-console.log(`Processing data (${dbConfig.length} rows)...`);
 let scenarios: ConfigScenario[] = [];
 
-try {
-  scenarios = parseRawData(dbConfig);
-  if (scenarios.length === 0) {
-    throw new Error('Nothing to process.');
-  }
-} catch (error) {
-  console.log('');
-  console.error('Failed with', error);
-  console.log('');
-  process.exit(-4);
+if (!process.env.DB_NAME) {
+  console.log('Mode: Local file');
+  scenarios = getLocalDefaultScenarios();
+} else {
+  console.log('Mode: Database');
+  scenarios = await getDbScenarios();
+}
+
+checkConfig(scenarios)
+
+if (scenarios.length === 0) {
+  throw new Error('Nothing to process. List of available scenarios is empty.');
 }
 
 console.log();
-console.log('Scenarios:', scenarios.length);
+console.log('Available scenarios:', scenarios.length);
 
 scenarios.forEach((scenario, scenarioIdx) => {
   console.log((scenarioIdx + 1) + '.', scenario.scenarioId, 'on ' + scenario.targets.length + ' target(s)');
@@ -70,10 +67,12 @@ try {
   if (!fs.existsSync(setupScenarioTargetsFile)) {
     throw new Error('Configuration file was not created!');
   }
+  console.log('Configuration saved as', setupScenarioTargetsFile);
 } catch (error: any) {
   console.error(error);
   process.exit(-7);
 }
 
+console.log();
 console.log('Done.');
 console.log();

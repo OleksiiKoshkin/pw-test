@@ -1,4 +1,4 @@
-export * from './get-config';
+export * from './get-runtime-config';
 export * from './get-report-data';
 export * from './ag-grid';
 export * from './helpers';
