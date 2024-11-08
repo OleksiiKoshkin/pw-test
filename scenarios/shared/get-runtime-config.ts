@@ -1,7 +1,7 @@
-import { ConfigTarget } from '../../../types';
-import { setupScenarioTargetsFile } from '../../../lib/config-consts';
+import { ConfigTarget } from '../../types';
+import { setupScenarioTargetsFile } from '../../lib/config-consts';
 import * as fs from 'node:fs';
-import { checkConfig } from '../../../lib/configure/utils';
+import { checkConfig } from '../../lib/configure/utils';
 
 if (!fs.existsSync(setupScenarioTargetsFile)) {
   throw new Error('Unable to find setupScenarioTargetsFile');

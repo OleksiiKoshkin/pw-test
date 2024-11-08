@@ -2,7 +2,7 @@ import { expect, Page, test } from '@playwright/test';
 import { LoginPage } from '../../models/login-page';
 import { invalidUser, testUser } from '../../lib/test-user';
 import { AppPageContainer } from '../../models/app-page-container';
-import { loginWithPopupPost, loginWithPopupPre } from '../shared/login-utils';
+import { loginWithPopupPost, loginWithPopupPre } from '../shared/login-utils.-ts';
 
 let page: Page;
 let loginPage: LoginPage;

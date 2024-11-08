@@ -1,5 +1,4 @@
-import { ConfigScenario } from '../../types';
-import { domainTypes, knownScenarios, tenants } from '../../tests/shared/types';
+import { ConfigScenario, domainTypes, knownScenarios, tenants } from '../../types';
 
 export function checkConfig(scenarios?: ConfigScenario[], throwError = false) {
   if (!scenarios || !scenarios.length) {

@@ -1,14 +1,9 @@
 import { expect, test } from '@playwright/test';
 import { invalidUser, standardUser, testUser } from '../../lib/test-user';
-import { testTarget } from '../../lib/test-env';
 
 test.describe.configure({ mode: 'serial' });
 
 test.describe('Should pass .env', { tag: '@prerequisites' }, async () => {
-  test('Should access tenant data', async () => {
-    expect(testTarget.tenant).toBeTruthy();
-    expect(testTarget.baseUrl).toBeTruthy();
-  });
 
   test('Should access creds data for main user', async () => {
     expect(testUser.login).toBeTruthy();

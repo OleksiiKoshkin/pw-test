@@ -1,18 +1,9 @@
 import { expect, test } from '@playwright/test';
-import {
-  ConfigTargetVariant,
-  ensureEndSlash,
-  ensureStartQuestion,
-  getConfigTargets,
-  getScenarioName,
-  PlayerParams,
-  ScenarioRunContext,
-  Widget
-} from '../shared';
-import { LoginPage } from '../../../models/login-page';
-import { testUser } from '../../../lib/test-user';
-import { domainTypes, tenants } from '../../shared/types';
-import { AppPageContainer } from '../../../models/app-page-container';
+import { ensureEndSlash, ensureStartQuestion, getConfigTargets, getScenarioName, Widget } from '../shared';
+import { LoginPage } from '../../models/login-page';
+import { testUser } from '../../lib/test-user';
+import { AppPageContainer } from '../../models/app-page-container';
+import { ConfigTargetVariant, domainTypes, PlayerParams, ScenarioRunContext, tenants } from '../../types';
 
 export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
   const targets = getConfigTargets(scenarioId);
@@ -26,27 +17,47 @@ export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
   }
 
   const scenarioName = getScenarioName(scenarioId);
-
+  console.log();
   test.describe(`${scenarioName} (${targets.length})`, { tag: ['@scenario', '@' + scenarioId] }, async () => {
+    if (targets.length === 0) {
+      console.log(`Targets not found for "${scenarioId}"`);
+    }
     test.skip(targets.length === 0, `Targets not found for "${scenarioId}"`);
     test.describe.configure({ mode: 'parallel' });
     test.use({ storageState: { cookies: [], origins: [] } });
 
+    console.log('Prepare scenario', scenarioName, `(${scenarioId})`);
+
     targets.forEach((target, targetIdx) => {
-      test.describe(`Target ${targetIdx + 1}: ${target.domain}/${target.tenant}`, { tag: ['@' + target.domain, '@' + target.tenant] }, async () => {
+      test.describe(`Target ${targetIdx + 1}: ${target.domain}:${target.tenant}`, { tag: ['@' + target.domain, '@' + target.tenant] }, async () => {
+        console.log('  Target:', target.domain + ':' + target.tenant, target.name || '', target.url);
+        console.log('    name:', target.name || '-');
+        console.log('     url:', target.url || '-');
+        console.log('  widget:', target.targetWidgetId || '-');
+
         test.describe.configure({ mode: 'parallel' });
 
         test.skip(!domainTypes[target.domain], 'Invalid domain ' + target.domain);
         test.skip(!tenants[target.tenant], 'Invalid tenant ' + target.tenant);
 
-        test.skip(!target.targetWidgetId, 'Empty targetWidgetId');
-        test.skip(!target.url, 'Empty Target URL');
+        // test.skip(!target.targetWidgetId, 'Empty targetWidgetId');
+        // test.skip(!target.url, 'Empty Target URL');
 
         const baseUrl = (target.domain === 'local' ? 'http://' : 'https://') + domainTypes[target.domain];
 
-        (target.variants || [{ name: 'Default' }]).forEach((variant: ConfigTargetVariant, variantIdx: number) => {
+        (!target.variants || target.variants.length === 0 ? [{
+          name: 'Default single variant',
+          id: '0',
+          queryParams: ''
+        }] : target.variants).forEach((variant: ConfigTargetVariant, variantIdx: number) => {
           test.describe(`${variantIdx + 1}. ${variant.name}`, { tag: ['@' + variant.name.replace(/\s+/g, '_')] }, async () => {
             test.describe.configure({ mode: 'serial' });
+
+            console.log('        ',
+              (variantIdx + 1) + '.',
+              variant.name || '',
+              'Params:',
+              variant.queryParams ? variant.queryParams.substring(0, 20) + '...' + variant.queryParams.substring(variant.queryParams.length - 20) : 'no params');
 
             const runContext: ScenarioRunContext = {
               page: undefined,

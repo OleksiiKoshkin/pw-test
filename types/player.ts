@@ -1,10 +1,5 @@
 import { Page } from '@playwright/test';
-import { Widget } from '../tests/scenarios/shared';
-
-export type PlayerTestSinglePageExecutorParams = {
-  page: Page
-  widget: Widget
-}
+import { KnownScenario, Widget } from '../scenarios/shared';
 
 export type ScenarioRunContext = {
   page?: Page,
@@ -13,6 +8,6 @@ export type ScenarioRunContext = {
 }
 
 export type PlayerParams = {
-  scenarioId: string;
+  scenarioId: KnownScenario;
   testExecutor: (params: ScenarioRunContext) => void
 }

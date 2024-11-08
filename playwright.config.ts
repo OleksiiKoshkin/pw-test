@@ -1,19 +1,6 @@
 import { PlaywrightTestConfig } from '@playwright/test';
 import 'dotenv/config';
-import {
-  appAllProject,
-  appAuthProject,
-  appPerfProject,
-  globalPrerequisitesProject,
-  loginFlowProject,
-  scenarioArrAccuracy,
-  scenarioPnlLines,
-  scenarioPnlNetCalc
-} from './projects';
 import { outDir, setupStateFile, testsDir } from './lib/config-consts';
-import { testTarget } from './lib/test-env';
-
-const baseURL = testTarget.baseUrl;
 
 /**
  * See https://playwright.dev/docs/test-configuration
@@ -44,7 +31,7 @@ const config: PlaywrightTestConfig = {
     actionTimeout: 20 * 1000,
     navigationTimeout: 90 * 1000,
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL,
+    baseURL: '',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
     // trace: 'retain-on-failure',
@@ -56,14 +43,10 @@ const config: PlaywrightTestConfig = {
   },
   /* Configure projects for major browsers. */
   projects: [
-    ...globalPrerequisitesProject,
-    ...loginFlowProject,
-    ...appAuthProject,
-    ...appAllProject,
-    ...appPerfProject,
-    ...scenarioArrAccuracy,
-    ...scenarioPnlLines,
-    ...scenarioPnlNetCalc
+    {
+      name: 'scenarios',
+      testMatch: '**/*.spec.ts'
+    }
   ],
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
   outputDir: outDir

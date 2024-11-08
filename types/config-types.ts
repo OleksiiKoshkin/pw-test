@@ -1,4 +1,4 @@
-import { DomainType, TenantCode } from '../tests/shared/types';
+import { DomainType, KnownScenario, TenantCode } from './environment';
 
 export type ConfigTargetVariant = {
   id?: string
@@ -17,7 +17,7 @@ export type ConfigTarget = {
 }
 
 export type ConfigScenario = {
-  scenarioId: string
+  scenarioId: KnownScenario
   name: string
   targets: ConfigTarget[]
 }

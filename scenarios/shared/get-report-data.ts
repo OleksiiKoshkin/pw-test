@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { expect, test } from '@playwright/test';
 import { AgGridReportModel, extractDataFromAgGrid } from './ag-grid';
-import { CommonReportPayload, ScenarioRunContext } from '../../../types';
+import { CommonReportPayload, ScenarioRunContext } from '../../types';
 
 export function getReportData(params: ScenarioRunContext, payload: CommonReportPayload) {
   test('Should reach widget', async () => {
