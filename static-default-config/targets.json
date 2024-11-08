@@ -135,7 +135,7 @@
           "id": 7,
           "name": "staging:acme3",
           "tenant": "acme3",
-          "domain": "production",
+          "domain": "staging",
           "skipLogin": true,
           "url": "",
           "targetWidgetId": "",

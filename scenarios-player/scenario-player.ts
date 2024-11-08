@@ -13,8 +13,9 @@ import {
 import { LoginPage } from '../models/login-page';
 import { AppPageContainer } from '../models/app-page-container';
 
-const onlyScenario = process.env.ONLY_SCENARIO;
-if (onlyScenario && onlyScenario !== 'all_possible') {
+let onlyScenario = '';
+if (process.env.ONLY_SCENARIO && process.env.ONLY_SCENARIO !== 'all_possible') {
+  onlyScenario = process.env.ONLY_SCENARIO;
   console.log('Run only | Scenario', onlyScenario);
 
   if (!knownScenarios.includes(onlyScenario as KnownScenario)) {
@@ -22,8 +23,9 @@ if (onlyScenario && onlyScenario !== 'all_possible') {
   }
 }
 
-const onlyEnvironment = process.env.ONLY_ENVIRONMENT;
-if (onlyEnvironment && onlyEnvironment !== 'all_possible') {
+let onlyEnvironment = '';
+if (process.env.ONLY_ENVIRONMENT && process.env.ONLY_ENVIRONMENT !== 'all_possible') {
+  onlyEnvironment = process.env.ONLY_ENVIRONMENT;
   console.log('Run only | Environment', onlyEnvironment);
 
   if (!domainTypes[onlyEnvironment]) {
@@ -31,8 +33,9 @@ if (onlyEnvironment && onlyEnvironment !== 'all_possible') {
   }
 }
 
-const onlyTenant = process.env.ONLY_TENANT;
-if (onlyTenant && onlyTenant !== 'all_possible') {
+let onlyTenant = '';
+if (process.env.ONLY_TENANT && process.env.ONLY_TENANT !== 'all_possible') {
+  onlyTenant = process.env.ONLY_TENANT;
   console.log('Run only | Tenant', onlyTenant);
 
   if (!tenants[onlyTenant]) {
