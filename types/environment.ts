@@ -2,7 +2,8 @@ export const knownScenarios = [
   'arr_net_top_accuracy',
   'pnl_values_10x',
   'pnl_net_calculation',
-  'performance-version-page'
+  'performance-version-page',
+  'login-flow'
 ] as const;
 
 export type KnownScenario = typeof knownScenarios[number];

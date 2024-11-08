@@ -37,6 +37,10 @@ scenarios.forEach((scenario, scenarioIdx) => {
       defaultName,
       defaultName !== target.name ? '"' + target.name + '"' : '');
 
+    if (target.skipLogin) {
+      console.log('    (skip login flow)');
+    }
+
     (target.variants || []).forEach((variant) => {
       console.log('        -', variant.name);
     });

@@ -12,6 +12,7 @@ export type ConfigTarget = {
   domain: DomainType // production
   url?: string
   name?: string
+  skipLogin?: boolean
   targetWidgetId?: string // widget container identification
   variants?: ConfigTargetVariant[] // extra navigation parameters
 }

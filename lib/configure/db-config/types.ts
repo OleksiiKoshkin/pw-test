@@ -6,6 +6,7 @@ export type RawDbRow = {
   tenant_id: string
   environment: string // ?
   initial_url: string | null
+  skip_login: boolean
   widget_id: string | null
   variant_id: string | null
   variant_name: string | null

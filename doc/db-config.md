@@ -20,40 +20,40 @@ GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO e2e_user;
 
 ---- scenarios
 
-CREATE TABLE e2e_scenarios (
-scenario_id character varying(48) PRIMARY KEY,
-scenario_name text NOT NULL,
-scenario_enabled boolean DEFAULT true
+CREATE TABLE scenarios (
+id character varying(48) PRIMARY KEY,
+name text NOT NULL,
+is_enabled boolean DEFAULT true
 );
 
-CREATE UNIQUE INDEX e2e_scenarios_pkey ON e2e_scenarios(scenario_id text_ops);
+CREATE UNIQUE INDEX e2e_scenarios_pkey ON scenarios(id text_ops);
 
 ---- targets
 
-CREATE TABLE e2e_targets (
-target_id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-scenario_id character varying(48) REFERENCES e2e_scenarios(scenario_id) ON DELETE CASCADE ON UPDATE CASCADE,
-target_enabled boolean DEFAULT true,
-tenant character varying(16) NOT NULL,
+CREATE TABLE scenarios_environment (
+id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+scenario_id character varying(48) REFERENCES scenarios(id) ON DELETE CASCADE ON UPDATE CASCADE,
+is_enabled boolean DEFAULT true,
+tenant_id character varying(16) NOT NULL,
 environment character varying(48) NOT NULL,
-target_url text,
+initial_url text,
 widget_id text,
-target_name text
+description text,
+skip_login boolean DEFAULT false
 );
 
-CREATE UNIQUE INDEX e2e_targets_pkey ON e2e_targets(target_id int4_ops);
+CREATE UNIQUE INDEX e2e_targets_pkey ON scenarios_environment(id int4_ops);
 
 ---- variants
-
-CREATE TABLE e2e_variants (
-variant_id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-target_id integer REFERENCES e2e_targets(target_id) ON DELETE CASCADE ON UPDATE CASCADE,
-variant_enabled boolean DEFAULT true,
-variant_name text NOT NULL,
-variant_url_params text
+CREATE TABLE variants (
+id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+scenarios_environment_id integer REFERENCES scenarios_environment(id) ON DELETE CASCADE ON UPDATE CASCADE,
+is_enabled boolean DEFAULT true,
+name text NOT NULL,
+url_params text
 );
 
-CREATE UNIQUE INDEX e2e_variants_pkey ON e2e_variants(variant_id int4_ops);
+CREATE UNIQUE INDEX e2e_variants_pkey ON variants(id int4_ops);
 
 ---- select
 select

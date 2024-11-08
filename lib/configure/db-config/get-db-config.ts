@@ -10,6 +10,7 @@ const query: string = `select
 	scenarios_environment.environment,
 	scenarios_environment.initial_url,
 	scenarios_environment.widget_id,
+	scenarios_environment.skip_login,
 	variants.id as variant_id,
 	variants.name as variant_name,
 	variants.url_params as variant_url_params

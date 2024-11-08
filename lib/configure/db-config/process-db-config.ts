@@ -1,5 +1,5 @@
 import { getDBConfig } from './get-db-config';
-import { ConfigScenario, ConfigTarget } from '../../../types';
+import { ConfigScenario, ConfigTarget, KnownScenario } from '../../../types';
 import { RawDbRow } from './types';
 
 export async function getDbScenarios(): Promise<ConfigScenario[]> {
@@ -44,12 +44,12 @@ function getAllTargetsByScenarioId(rows: Array<RawDbRow>, scenarioId: string) {
     if (result.find((r) => r.id === row.target_id)) {
       return;
     }
-
     result.push({
       id: row.target_id,
       name: row.target_name || ((row.environment || '') + ':' + (row.tenant_id || '')),
       tenant: row.tenant_id, // code!
       domain: row.environment, // code!
+      skipLogin: row.skip_login ?? false,
       url: row.initial_url || '',
       targetWidgetId: row.widget_id || '',
 
@@ -69,7 +69,7 @@ function parseRawDbData(rows: Array<RawDbRow>) {
 
   getAllScenarioIds(rows).forEach(([scenarioId, scenarioName]) => {
     scenarios.push({
-      scenarioId,
+      scenarioId: scenarioId as KnownScenario,
       name: scenarioName,
       targets: getAllTargetsByScenarioId(rows, scenarioId)
     });

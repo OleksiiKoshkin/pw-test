@@ -1,9 +1,44 @@
 import { expect, test } from '@playwright/test';
 import { ensureEndSlash, ensureStartQuestion, getConfigTargets, getScenarioName, Widget } from './';
 import { testUser } from '../lib/test-user';
-import { ConfigTargetVariant, domainTypes, PlayerParams, ScenarioRunContext, tenants } from '../types';
+import {
+  ConfigTargetVariant,
+  domainTypes,
+  KnownScenario,
+  knownScenarios,
+  PlayerParams,
+  ScenarioRunContext,
+  tenants
+} from '../types';
 import { LoginPage } from '../models/login-page';
 import { AppPageContainer } from '../models/app-page-container';
+
+const onlyScenario = process.env.ONLY_SCENARIO;
+if (onlyScenario) {
+  console.log('Run only | Scenario', onlyScenario);
+
+  if (!knownScenarios.includes(onlyScenario as KnownScenario)) {
+    throw new Error(`Unknown scenario "${onlyScenario}": not listed in ${knownScenarios.join(', ')}`);
+  }
+}
+
+const onlyEnvironment = process.env.ONLY_ENVIRONMENT;
+if (onlyEnvironment) {
+  console.log('Run only | Environment', onlyEnvironment);
+
+  if (!domainTypes[onlyEnvironment]) {
+    throw new Error(`No such environment "${onlyEnvironment}" (from ${Object.keys(domainTypes).join(', ')})}`);
+  }
+}
+
+const onlyTenant = process.env.ONLY_TENANT;
+if (onlyTenant) {
+  console.log('Run only | Tenant', onlyTenant);
+
+  if (!tenants[onlyTenant]) {
+    throw new Error(`No such tenant "${onlyTenant}" (from ${Object.keys(tenants).join(', ')})}`);
+  }
+}
 
 export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
   const targets = getConfigTargets(scenarioId);
@@ -16,14 +51,24 @@ export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
   const scenarioName = getScenarioName(scenarioId);
   console.log();
   test.describe(`${scenarioName} (${targets.length})`, { tag: ['@' + scenarioId] }, async () => {
+    const shouldSkipByScenario = !!onlyScenario && scenarioId !== onlyScenario;
+
     test.skip(targets.length === 0, `Targets not found for "${scenarioId}"`);
+    test.skip(shouldSkipByScenario, `Skip for onlyScenario "${onlyScenario}"`);
+
     test.describe.configure({ mode: 'parallel' });
     test.use({ storageState: { cookies: [], origins: [] } });
+    if (shouldSkipByScenario) {
+      return;
+    }
 
     console.log('Prepare scenario', scenarioName, `(${scenarioId})`);
 
     targets.forEach((target, targetIdx) => {
       test.describe(`Target ${targetIdx + 1}: ${target.domain}:${target.tenant}`, { tag: ['@' + target.domain, '@' + target.tenant] }, async () => {
+        const shouldSkipByEnv = !!onlyEnvironment && target.domain !== onlyEnvironment;
+        const shouldSkipByTenant = !!onlyTenant && target.tenant !== onlyTenant;
+
         console.log('  -----------------');
         console.log('  Target parameters');
         console.log('  -----------------');
@@ -34,12 +79,29 @@ export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
         console.log('       tenant:', target.tenant || '-');
         console.log('          url:', target.url || '-');
         console.log('       widget:', target.targetWidgetId || '-');
+
+        if (target.skipLogin) {
+          console.log('     (skip default scenario login flow)');
+        }
+
         console.log('     variants:');
 
         test.describe.configure({ mode: 'parallel' });
 
         test.skip(!domainTypes[target.domain], 'Invalid domain ' + target.domain);
         test.skip(!tenants[target.tenant], 'Invalid tenant ' + target.tenant);
+
+        test.skip(shouldSkipByEnv, `Skip for onlyEnvironment "${onlyEnvironment}"`);
+        test.skip(shouldSkipByTenant, `Skip for onlyTenant "${onlyTenant}"`);
+
+        if (shouldSkipByEnv) {
+          console.warn(`Skip for onlyEnvironment "${onlyEnvironment}"`);
+          return;
+        }
+        if (shouldSkipByTenant) {
+          console.warn(`Skip for onlyTenant "${onlyTenant}"`);
+          return;
+        }
 
         const baseUrl = (target.domain === 'local' ? 'http://' : 'https://') + domainTypes[target.domain];
 
@@ -67,30 +129,33 @@ export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
             };
 
             test.beforeAll(async ({ browser }) => {
-              console.log(`Execute login flow for ${target.domain}/${target.tenant}@${testUser.login} for ${scenarioId}...`);
-
               runContext.page = await browser.newPage();
-              const loginPage = new LoginPage(runContext.page);
-              await runContext.page.goto(`${baseUrl}/?tenant-override=${target.tenant}`);
-
-              const res = await Promise.all([
-                runContext.page.waitForEvent('popup'),
-                loginPage.waitLoginVisible(),
-                loginPage.clickLogin()
-              ]);
-
-              runContext.popup = res[0];
-
-              await runContext.popup.fill('#username', testUser.login);
-              await runContext.popup.fill('#password', testUser.password);
-              await runContext.popup.getByRole('button', { name: 'Continue', exact: true }).click();
-
-              const appPage = new AppPageContainer(runContext.page);
-              await appPage.waitAppPageVisibility();
-
               runContext.navigate = async (url: string) => {
-                await runContext.page.goto(`${ensureEndSlash(baseUrl)}/${url}`);
+                await runContext.page.goto(`${ensureEndSlash(baseUrl)}${url}`);
               };
+
+              console.log(`Execute preparation flow for ${target.domain}/${target.tenant}@${testUser.login} for ${scenarioId}...`);
+
+              // tenant override executes even for skip login flows
+              const loginPage = new LoginPage(runContext.page);
+              await runContext.page.goto(`${ensureEndSlash(baseUrl)}?tenant-override=${target.tenant}`);
+
+              if (!target.skipLogin) {
+                const res = await Promise.all([
+                  runContext.page.waitForEvent('popup'),
+                  loginPage.waitLoginVisible(),
+                  loginPage.clickLogin()
+                ]);
+
+                runContext.popup = res[0];
+
+                await runContext.popup.fill('#username', testUser.login);
+                await runContext.popup.fill('#password', testUser.password);
+                await runContext.popup.getByRole('button', { name: 'Continue', exact: true }).click();
+
+                const appPage = new AppPageContainer(runContext.page);
+                await appPage.waitAppPageVisibility();
+              }
 
               console.log(`Login done for ${target.domain}/${target.tenant}@${testUser.login} for ${scenarioId}.`);
             });
@@ -107,6 +172,7 @@ export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
             });
 
             test(`Should be logged in to ${target.domain}/${target.tenant}`, async () => {
+              test.skip(target.skipLogin, 'Skip default login flow');
               expect(runContext.page, 'Run context is not initialized').toBeDefined();
 
               const appPage = new AppPageContainer(runContext.page!);
