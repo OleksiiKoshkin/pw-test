@@ -5,6 +5,9 @@ import { setupScenarioTargetsFile } from './config-consts';
 import { getLocalDefaultScenarios } from './configure/local-config/get-local-default-config';
 import { getDbScenarios } from './configure/db-config/process-db-config';
 import { checkConfig } from './configure/utils';
+import { mkdir } from 'node:fs';
+import { mkdirSync } from 'fs';
+import path from 'node:path';
 
 console.log('Check runtime configuration...');
 console.log('==============================');
@@ -63,6 +66,11 @@ if (fs.existsSync(setupScenarioTargetsFile)) {
     console.error('Cannot remove existing configuration!');
     process.exit(-6);
   }
+}
+
+if (!fs.existsSync(path.dirname(setupScenarioTargetsFile))) {
+  console.log('Create config folder', path.dirname(setupScenarioTargetsFile) + '...');
+  fs.mkdirSync(path.dirname(setupScenarioTargetsFile))
 }
 
 try {
