@@ -133,9 +133,9 @@
       "targets": [
         {
           "id": 7,
-          "name": "staging:acme3",
+          "name": "production:acme3",
           "tenant": "acme3",
-          "domain": "staging",
+          "domain": "production",
           "skipLogin": true,
           "url": "",
           "targetWidgetId": "",
