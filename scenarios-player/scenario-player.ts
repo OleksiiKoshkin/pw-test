@@ -40,6 +40,9 @@ if (onlyTenant) {
   }
 }
 
+console.log('env', JSON.stringify(process.env, null, 2));
+throw new Error('test fail');
+
 export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
   const targets = getConfigTargets(scenarioId);
 
