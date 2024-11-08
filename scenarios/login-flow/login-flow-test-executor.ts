@@ -1,32 +1,73 @@
-import { expect, test } from '@playwright/test';
+import { expect, Page, test } from '@playwright/test';
 import { ScenarioRunContext } from '../../types';
-import { Sidebar } from '../../models/sidebar/sidebar';
-import { VersionsPage } from '../../models/versions-page';
+import { LoginPage } from '../../models/login-page';
+import { testUser } from '../../lib/test-user';
+import { AppPageContainer } from '../../models/app-page-container';
 
 export function testLoginFlow(params: ScenarioRunContext) {
-  test('Login flow', async () => {
-    test.fail(!params.page, 'No Page to process!');
+  let popup: Page;
 
-    const startPrep = Date.now();
+  test('Should display login page', async () => {
+    const loginPage = new LoginPage(params.page!);
+    await loginPage.waitLoginVisible();
+  });
 
-    await params.navigate?.('board'); // should be 404
+  test.describe('Login flow', async () => {
+    test.beforeAll(async () => {
+      const loginPage = new LoginPage(params.page!);
 
-    const sidebar = new Sidebar(params.page!);
-    await sidebar.getSidebar();
+      const res = await Promise.all([
+        params.page!.waitForEvent('popup'),
+        loginPage.waitLoginVisible(),
+        loginPage.clickLogin()
+      ]);
 
-    const endPrep = Date.now();
-    console.log(`Preparation time: ${endPrep - startPrep} ms`);
+      popup = res[0];
+    });
 
-    const startExec = Date.now();
+    test.afterAll(async () => {
+      if (popup?.close) {
+        await popup.close();
+      }
+    });
 
-    await sidebar.versionsButton.click();
-    const versionsPage = new VersionsPage(params.page!);
-    await versionsPage.waitVersionPageVisibility();
+    test('Should open Auth0 login on click and access the fields', async () => {
+      await popup.waitForSelector('#username');
+      await popup.waitForSelector('#password');
+      const continueButton = popup.locator('button[type="submit"][name="action"]');
+      expect(continueButton).toBeDefined();
+      expect(await continueButton.evaluate((node: any) => node.innerText)).toBe('Continue');
+    });
 
-    const endExec = Date.now();
+    // test('Should fail login with incorrect creds', async () => {
+    //   test.skip(!invalidUser.login || !invalidUser.password);
+    //
+    //   await popup.fill('#username', invalidUser.login);
+    //   await popup.fill('#password', invalidUser.password);
+    //   await popup.getByRole('button', { name: 'Continue', exact: true }).click();
+    //
+    //   await loginPage.waitLoginVisible();
+    //
+    //   await expect(loginPage.loginTitle).toHaveText('Login failed. The username provided doesn’t exist.');
+    //   await expect(loginPage.loginMessage).toHaveText('Please check your details or contact your administrator for assistance.');
+    // });
 
-    console.log(`Page visibility time: ${endExec - startExec} ms`);
+    test('Should pass login with correct creds', async () => {
+      await popup.fill('#username', testUser.login);
+      await popup.fill('#password', testUser.password);
+      await popup.getByRole('button', { name: 'Continue', exact: true }).click();
 
-    expect(endExec - startExec).toBeLessThan(3000);
+      const appPage = new AppPageContainer(params.page!);
+      await appPage.waitAppPageVisibility();
+    });
+
+    test(`Should be logged in to ${params.domain}/${params.tenant}`, async () => {
+      const appPage = new AppPageContainer(params.page!);
+      const { user, tenant } = await appPage.getCurrentUserAndTenant();
+
+      expect(user, 'Check user').toEqual(testUser.login);
+      expect(tenant, 'Check tenant').toEqual(params.tenant);
+    });
+
   });
 }

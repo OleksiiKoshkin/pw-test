@@ -173,13 +173,13 @@ export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
 
             test(`Should be logged in to ${target.domain}/${target.tenant}`, async () => {
               test.skip(target.skipLogin, 'Skip default login flow');
-              expect(runContext.page, 'Run context is not initialized').toBeDefined();
+              expect(runContext.page, 'Run context is initialized').toBeDefined();
 
               const appPage = new AppPageContainer(runContext.page!);
               const { user, tenant } = await appPage.getCurrentUserAndTenant();
 
-              expect(user, 'Invalid user').toEqual(testUser.login);
-              expect(tenant, 'Invalid tenant').toEqual(target.tenant);
+              expect(user, 'Check user').toEqual(testUser.login);
+              expect(tenant, 'Check tenant').toEqual(target.tenant);
             });
 
             test('Should navigate to target URL/widget', async () => {

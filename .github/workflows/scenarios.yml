@@ -29,9 +29,11 @@ on:
           - arr_net_top_accuracy
           - pnl_values_10x
           - pnl_net_calculation
+          - performance-version-page
+          - login-flow
       environment:
         type: environment
-        description: (Temp) Select the environment
+        description: Select environment (credentials)
 
 jobs:
   test:
@@ -69,6 +71,7 @@ jobs:
           DB_NAME: ${{ secrets.DB_NAME }}
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_SCHEMA: ${{ secrets.DB_SCHEMA }}
+          ONLY_SCENARIO: ${{ inputs.run_scenarios }}
 
         run: npm run configure:run scenario
 
