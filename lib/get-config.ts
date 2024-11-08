@@ -5,8 +5,6 @@ import { setupScenarioTargetsFile } from './config-consts';
 import { getLocalDefaultScenarios } from './configure/local-config/get-local-default-config';
 import { getDbScenarios } from './configure/db-config/process-db-config';
 import { checkConfig } from './configure/utils';
-import { mkdir } from 'node:fs';
-import { mkdirSync } from 'fs';
 import path from 'node:path';
 
 console.log('Check runtime configuration...');
@@ -22,7 +20,7 @@ if (!process.env.DB_NAME) {
   scenarios = await getDbScenarios();
 }
 
-checkConfig(scenarios)
+checkConfig(scenarios);
 
 if (scenarios.length === 0) {
   throw new Error('Nothing to process. List of available scenarios is empty.');
@@ -70,7 +68,7 @@ if (fs.existsSync(setupScenarioTargetsFile)) {
 
 if (!fs.existsSync(path.dirname(setupScenarioTargetsFile))) {
   console.log('Create config folder', path.dirname(setupScenarioTargetsFile) + '...');
-  fs.mkdirSync(path.dirname(setupScenarioTargetsFile))
+  fs.mkdirSync(path.dirname(setupScenarioTargetsFile));
 }
 
 try {
@@ -88,6 +86,3 @@ try {
 console.log();
 console.log('Done.');
 console.log();
-
-console.log('env', JSON.stringify(process.env, null, 2));
-process.exit(-7);
