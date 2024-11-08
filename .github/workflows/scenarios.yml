@@ -44,12 +44,22 @@ jobs:
       - name: Use variables
         env:
           ENV_NAME: ${{ inputs.environment }}
+          ONLY_SCENARIO: ${{ inputs.run_scenarios }}
+          ONLY_TENANT: ${{ inputs.run_on_tenants }}
+          ONLY_ENVIRONMENT: ${{ inputs.run_on_env }}
         run: |
           echo "ENV_NAME: $ENV_NAME"
+          echo "ONLY_SCENARIO: ONLY_SCENARIO"
+          echo "ONLY_TENANT: ONLY_TENANT"
+          echo "ONLY_ENVIRONMENT: ONLY_ENVIRONMENT"
 
       - name: Check user set
         run: |
           if [[ "${{ secrets.TEST_USER }}" == "" ]]; then exit 1; else echo "OK"; fi
+
+      - name: Check env set
+        run: |
+          if [[ "${{ inputs.run_on_env }}" == "production" ]]; then exit 1; else echo "ENV OK"; fi
 
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -72,6 +82,8 @@ jobs:
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_SCHEMA: ${{ secrets.DB_SCHEMA }}
           ONLY_SCENARIO: ${{ inputs.run_scenarios }}
+          ONLY_TENANT: ${{ inputs.run_on_tenants }}
+          ONLY_ENVIRONMENT: ${{ inputs.run_on_env }}
 
         run: npm run configure:run:headless
 
