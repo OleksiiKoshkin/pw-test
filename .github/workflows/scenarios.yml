@@ -73,7 +73,7 @@ jobs:
           DB_SCHEMA: ${{ secrets.DB_SCHEMA }}
           ONLY_SCENARIO: ${{ inputs.run_scenarios }}
 
-        run: npm run configure:run
+        run: npm run configure:run:headless
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}

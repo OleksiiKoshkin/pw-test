@@ -88,3 +88,6 @@ try {
 console.log();
 console.log('Done.');
 console.log();
+
+console.log('env', JSON.stringify(process.env, null, 2));
+process.exit(-7);
