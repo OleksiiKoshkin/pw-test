@@ -1,12 +1,6 @@
-import {
-  AgGridReportModel,
-  CommonReportPayload,
-  getHeaderText,
-  getReportData,
-  hasDifferentVersions,
-  ScenarioRunContext
-} from '../shared';
 import { expect, test } from '@playwright/test';
+import { CommonReportPayload, ScenarioRunContext } from '../../types';
+import { AgGridReportModel, getHeaderText, getReportData, hasDifferentVersions } from '../../scenarios-player';
 
 export function testArrNumberChains(params: ScenarioRunContext) {
   const testData: CommonReportPayload = {

@@ -1,27 +1,21 @@
 import { expect, test } from '@playwright/test';
-import { ensureEndSlash, ensureStartQuestion, getConfigTargets, getScenarioName, Widget } from '../shared';
-import { LoginPage } from '../../models/login-page';
-import { testUser } from '../../lib/test-user';
-import { AppPageContainer } from '../../models/app-page-container';
-import { ConfigTargetVariant, domainTypes, PlayerParams, ScenarioRunContext, tenants } from '../../types';
+import { ensureEndSlash, ensureStartQuestion, getConfigTargets, getScenarioName, Widget } from './';
+import { testUser } from '../lib/test-user';
+import { ConfigTargetVariant, domainTypes, PlayerParams, ScenarioRunContext, tenants } from '../types';
+import { LoginPage } from '../models/login-page';
+import { AppPageContainer } from '../models/app-page-container';
 
 export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
   const targets = getConfigTargets(scenarioId);
 
-  if (!testUser.login) {
-    throw new Error('Empty login!');
-  }
-
-  if (!testUser.password) {
-    throw new Error('Empty password!');
+  if (targets.length === 0) {
+    console.log(`Environment: targets not found for "${scenarioId}", skip`);
+    return;
   }
 
   const scenarioName = getScenarioName(scenarioId);
   console.log();
-  test.describe(`${scenarioName} (${targets.length})`, { tag: ['@scenario', '@' + scenarioId] }, async () => {
-    if (targets.length === 0) {
-      console.log(`Targets not found for "${scenarioId}"`);
-    }
+  test.describe(`${scenarioName} (${targets.length})`, { tag: ['@' + scenarioId] }, async () => {
     test.skip(targets.length === 0, `Targets not found for "${scenarioId}"`);
     test.describe.configure({ mode: 'parallel' });
     test.use({ storageState: { cookies: [], origins: [] } });
@@ -30,30 +24,34 @@ export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
 
     targets.forEach((target, targetIdx) => {
       test.describe(`Target ${targetIdx + 1}: ${target.domain}:${target.tenant}`, { tag: ['@' + target.domain, '@' + target.tenant] }, async () => {
-        console.log('  Target:', target.domain + ':' + target.tenant, target.name || '', target.url);
-        console.log('    name:', target.name || '-');
-        console.log('     url:', target.url || '-');
-        console.log('  widget:', target.targetWidgetId || '-');
+        console.log('  -----------------');
+        console.log('  Target parameters');
+        console.log('  -----------------');
+        if (target.name !== `${target.domain}:${target.tenant}`) {
+          console.log('       name:', target.name || '-');
+        }
+        console.log('  environment:', target.domain || '-');
+        console.log('       tenant:', target.tenant || '-');
+        console.log('          url:', target.url || '-');
+        console.log('       widget:', target.targetWidgetId || '-');
+        console.log('     variants:');
 
         test.describe.configure({ mode: 'parallel' });
 
         test.skip(!domainTypes[target.domain], 'Invalid domain ' + target.domain);
         test.skip(!tenants[target.tenant], 'Invalid tenant ' + target.tenant);
 
-        // test.skip(!target.targetWidgetId, 'Empty targetWidgetId');
-        // test.skip(!target.url, 'Empty Target URL');
-
         const baseUrl = (target.domain === 'local' ? 'http://' : 'https://') + domainTypes[target.domain];
 
         (!target.variants || target.variants.length === 0 ? [{
           name: 'Default single variant',
-          id: '0',
+          id: '',
           queryParams: ''
         }] : target.variants).forEach((variant: ConfigTargetVariant, variantIdx: number) => {
           test.describe(`${variantIdx + 1}. ${variant.name}`, { tag: ['@' + variant.name.replace(/\s+/g, '_')] }, async () => {
             test.describe.configure({ mode: 'serial' });
 
-            console.log('        ',
+            console.log('           ',
               (variantIdx + 1) + '.',
               variant.name || '',
               'Params:',
@@ -62,11 +60,14 @@ export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
             const runContext: ScenarioRunContext = {
               page: undefined,
               popup: undefined,
-              widget: undefined
+              widget: undefined,
+              baseUrl,
+              tenant: target.tenant,
+              domain: target.domain
             };
 
             test.beforeAll(async ({ browser }) => {
-              console.log(`Execute login for ${target.domain}/${target.tenant}@${testUser.login}...`);
+              console.log(`Execute login flow for ${target.domain}/${target.tenant}@${testUser.login} for ${scenarioId}...`);
 
               runContext.page = await browser.newPage();
               const loginPage = new LoginPage(runContext.page);
@@ -87,7 +88,11 @@ export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
               const appPage = new AppPageContainer(runContext.page);
               await appPage.waitAppPageVisibility();
 
-              console.log(`Login done for ${target.domain}/${target.tenant}@${testUser.login}...`);
+              runContext.navigate = async (url: string) => {
+                await runContext.page.goto(`${ensureEndSlash(baseUrl)}/${url}`);
+              };
+
+              console.log(`Login done for ${target.domain}/${target.tenant}@${testUser.login} for ${scenarioId}.`);
             });
 
             test.afterAll(async () => {
@@ -98,7 +103,7 @@ export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
               if (runContext.page?.close) {
                 await runContext.page.close();
               }
-              console.log(`Close page ${target.domain}/${target.tenant}@${testUser.login}`);
+              console.log(`Close page ${target.domain}/${target.tenant}@${testUser.login} for ${scenarioId}.`);
             });
 
             test(`Should be logged in to ${target.domain}/${target.tenant}`, async () => {
@@ -112,11 +117,15 @@ export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
             });
 
             test('Should navigate to target URL/widget', async () => {
-              const targetUrl = ensureEndSlash(baseUrl) + target.url + ensureStartQuestion(variant.queryParams);
-              await runContext.page!.goto(targetUrl);
+              test.skip(!variant.queryParams && !target.targetWidgetId, 'Standalone test target');
 
-              const appPage = new AppPageContainer(runContext.page!);
-              await appPage.waitAppPageVisibility();
+              if (target.url) {
+                const targetUrl = ensureEndSlash(baseUrl) + target.url + ensureStartQuestion(variant.queryParams);
+                await runContext.page!.goto(targetUrl);
+
+                const appPage = new AppPageContainer(runContext.page!);
+                await appPage.waitAppPageVisibility();
+              }
 
               if (target.targetWidgetId) {
                 runContext.widget = new Widget(runContext.page!, target.targetWidgetId!);
@@ -126,7 +135,7 @@ export function scenarioPlayer({ scenarioId, testExecutor }: PlayerParams) {
               }
             });
 
-            test.describe(`Testing ${scenarioName}: ${variant.name}`, async () => {
+            test.describe(`Testing ${scenarioName}: ${variant.name}`, { tag: ['@check'] }, async () => {
               test.describe.configure({ mode: 'serial' });
               testExecutor(runContext);
             });

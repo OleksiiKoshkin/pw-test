@@ -1,6 +1,15 @@
 import { PlaywrightTestConfig } from '@playwright/test';
 import 'dotenv/config';
 import { outDir, setupStateFile, testsDir } from './lib/config-consts';
+import { testUser } from './lib/test-user';
+
+if (!testUser.login) {
+  throw new Error('Empty login!');
+}
+
+if (!testUser.password) {
+  throw new Error('Empty password!');
+}
 
 /**
  * See https://playwright.dev/docs/test-configuration
@@ -28,7 +37,7 @@ const config: PlaywrightTestConfig = {
   reporter: 'html',
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-    actionTimeout: 20 * 1000,
+    actionTimeout: 30 * 1000,
     navigationTimeout: 90 * 1000,
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: '',

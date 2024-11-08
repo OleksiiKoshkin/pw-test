@@ -1,12 +1,12 @@
 import { expect, test } from '@playwright/test';
+import { CommonReportPayload, ScenarioRunContext } from '../../../types';
 import {
   AgGridReportModel,
-  CommonReportPayload,
   getHeaderText,
-  getNumberValue, getReportData,
-  hasDifferentVersions,
-  ScenarioRunContext
-} from '../../shared';
+  getNumberValue,
+  getReportData,
+  hasDifferentVersions
+} from '../../../scenarios-player';
 
 export async function testPnlLines(params: ScenarioRunContext) {
   const testData: CommonReportPayload = {

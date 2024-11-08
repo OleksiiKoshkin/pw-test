@@ -1,67 +1,32 @@
-import {
-  AgGridReportModel,
-  CommonReportPayload,
-  getHeaderText,
-  getReportData,
-  hasDifferentVersions,
-  ScenarioRunContext
-} from '../shared';
 import { expect, test } from '@playwright/test';
+import { ScenarioRunContext } from '../../types';
+import { Sidebar } from '../../models/sidebar/sidebar';
+import { VersionsPage } from '../../models/versions-page';
 
 export function testVersionPerf(params: ScenarioRunContext) {
-  const testData: CommonReportPayload = {
-    reportGrid: {} as AgGridReportModel,
-    gridData: [],
-    gridHeaders: [],
-    groupRowHeaders: []
-  };
+  test('Loading performance', async () => {
+    test.fail(!params.page, 'No Page to process!');
 
-  test.beforeAll(async () => {
-    testData.reportGrid = {} as AgGridReportModel;
-    testData.gridData.length = 0;
-    testData.gridHeaders.length = 0;
-    testData.groupRowHeaders.length = 0;
-  });
+    const startPrep = Date.now();
 
-  let lastColumnToCheck = 0;
+    await params.navigate?.('board'); // should be 404
 
-  // not async!
-  test.describe('Collecting data', () => {
-    getReportData(params, testData);
-  });
+    const sidebar = new Sidebar(params.page!);
+    await sidebar.getSidebar();
 
-  test.describe('Checking structure', () => {
-    test('Should have Total column(s)', async () => {
-      const lastMeaningColumnIndex = testData.gridHeaders[0].cols.findIndex((col) => col.value.toLowerCase().includes('total')) - 1;
-      expect(lastMeaningColumnIndex).toBeGreaterThan(0);
+    const endPrep = Date.now();
+    console.log(`Preparation time: ${endPrep - startPrep} ms`);
 
-      const colCounter = testData.gridData[0].cols.length;
-      expect(lastMeaningColumnIndex).toBeLessThan(colCounter);
+    const startExec = Date.now();
 
-      lastColumnToCheck = lastMeaningColumnIndex;
-    });
-  });
+    await sidebar.versionsButton.click();
+    const versionsPage = new VersionsPage(params.page!);
+    await versionsPage.waitVersionPageVisibility();
 
-  test('Net value of every column equals to the start value of next column', async () => {
-    const lastRowIdx = testData.gridData.length - 1;
+    const endExec = Date.now();
 
-    let diffCounter = 0;
-    const diffVersions = hasDifferentVersions(testData.gridHeaders);
+    console.log(`Page visibility time: ${endExec - startExec} ms`);
 
-    for (let i = 1; i < lastColumnToCheck; i++) {
-      const netValue = testData.gridData[lastRowIdx].cols[i - 1].value;
-      const currentTopValue = testData.gridData[0].cols[i].value;
-
-      const netColumnHeader = getHeaderText(testData.gridHeaders, i - 1, diffVersions);
-      const currentColumnHeader = getHeaderText(testData.gridHeaders, i, diffVersions);
-
-      if (netValue !== currentTopValue) {
-        diffCounter += 1;
-      }
-
-      expect.soft(netValue, `${i}. NET ${netValue} !== TOP ${currentTopValue} (${netColumnHeader} - ${currentColumnHeader})`).toBe(currentTopValue);
-    }
-
-    expect(diffCounter, `ARR Report has ${diffCounter} gaps on NET-TOP pairs (out of ${lastColumnToCheck} total)`).toBe(0);
+    expect(endExec - startExec).toBeLessThan(3000);
   });
 }

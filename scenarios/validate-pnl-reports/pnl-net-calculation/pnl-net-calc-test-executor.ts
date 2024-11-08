@@ -1,13 +1,13 @@
 import { expect, test } from '@playwright/test';
+import { CommonReportPayload, ScenarioRunContext } from '../../../types';
 import {
   AgGridReportModel,
-  CommonReportPayload,
   getHeaderText,
   getNumberValueOrZero,
   getReportData,
-  hasDifferentVersions,
-  ScenarioRunContext
-} from '../../shared';
+  hasDifferentVersions
+} from '../../../scenarios-player';
+
 
 export async function testNetCalc(params: ScenarioRunContext) {
   const testData: CommonReportPayload = {

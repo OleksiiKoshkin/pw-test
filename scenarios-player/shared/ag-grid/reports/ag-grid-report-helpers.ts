@@ -223,7 +223,7 @@ const scanGroupRowHeaders = async (groupRowContainer: Locator, mutableGroupHeade
       }
 
       const column = row.querySelector('div[role=gridcell]');
-      const cellText = (column.textContent || '')
+      const cellText = (column?.textContent || '')
         .replace(/\n/, ' ')
         .replace(/\s+/g, ' ')
         .trim();
