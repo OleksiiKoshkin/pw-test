@@ -9,7 +9,7 @@ on:
         default: 'all_possible'
         options:
           - all_possible
-          - acme
+          - acme3
           - claroty
           - aviatrix
       run_on_env:
