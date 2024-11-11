@@ -1,4 +1,4 @@
-import { LoginPage } from '../../models/login-page';
+import { LoginPage } from '../../models';
 import { Page } from '@playwright/test';
 
 export const loginWithPopupPre = async (page: Page) => {

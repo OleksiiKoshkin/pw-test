@@ -69,5 +69,7 @@ export function testLoginFlow(params: ScenarioRunContext) {
       expect(tenant, 'Check tenant').toEqual(params.tenant);
     });
 
+    // todo: check logout
+    // todo: update login page selectors
   });
 }

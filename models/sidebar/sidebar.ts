@@ -1,8 +1,8 @@
-import { Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 
 export class Sidebar {
-  readonly versionsButton;
-  readonly boardsButton;
+  readonly versionsButton: Locator;
+  readonly boardsButton: Locator;
   private page: Page;
 
   constructor(page: Page) {

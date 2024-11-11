@@ -1,10 +1,10 @@
-import { Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 
 export class BoardPage {
-  readonly pageContainer;
-  readonly boardPage;
-  readonly boardView;
-  readonly boardTitle;
+  readonly pageContainer: Locator;
+  readonly boardPage: Locator;
+  readonly boardView: Locator;
+  readonly boardTitle: Locator;
   private page: Page;
 
   constructor(page: Page) {

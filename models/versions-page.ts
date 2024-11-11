@@ -1,13 +1,13 @@
-import { Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 
 export class VersionsPage {
-  readonly pageContainer;
-  readonly versionsList;
-  readonly quickSearch;
-  readonly gridRoot;
-  readonly topBar;
-  readonly agGridWrapper;
-  readonly agGridRows;
+  readonly pageContainer: Locator;
+  readonly versionsList: Locator;
+  readonly quickSearch: Locator;
+  readonly gridRoot: Locator;
+  readonly topBar: Locator;
+  readonly agGridWrapper: Locator;
+  readonly agGridRows: Locator;
   private page: Page;
 
   constructor(page: Page) {

@@ -10,8 +10,8 @@ import {
   ScenarioRunContext,
   tenants
 } from '../types';
-import { LoginPage } from '../models/login-page';
-import { AppPageContainer } from '../models/app-page-container';
+import { LoginPage } from '../models';
+import { AppPageContainer } from '../models';
 
 let onlyScenario = '';
 if (process.env.ONLY_SCENARIO && process.env.ONLY_SCENARIO !== 'all_possible') {

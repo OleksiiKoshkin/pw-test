@@ -1,7 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { ScenarioRunContext } from '../../types';
-import { Sidebar } from '../../models/sidebar/sidebar';
-import { VersionsPage } from '../../models/versions-page';
+import { Sidebar, VersionsPage } from '../../models';
 
 export function testVersionPerf(params: ScenarioRunContext) {
   test('Loading performance', async () => {

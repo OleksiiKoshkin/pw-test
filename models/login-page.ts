@@ -1,16 +1,16 @@
-import { Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 
 export class LoginPage {
-  readonly loginButton;
-  readonly loginTitle;
-  readonly loginWelcome;
-  readonly loginMessage;
+  readonly loginButton: Locator;
+  readonly loginTitle: Locator;
+  readonly loginWelcome: Locator;
+  readonly loginMessage: Locator;
   private page: Page;
 
   constructor(page: Page) {
     this.page = page;
     // this.loginButton = this.page.getByTestId('login-button')
-    this.loginButton = this.page.locator('button >> nth=0')
+    this.loginButton = this.page.locator('button >> nth=0');
 
     this.loginWelcome = this.page.getByTestId('login-welcome');
 

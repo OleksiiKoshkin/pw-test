@@ -5,21 +5,17 @@
 3. Create `.env` file using `.env-template`:
 
 ```dotenv
-DOMAIN=https://app.staging... # or http://localhost:3000 - no trailing "/" ! - for local env
-TENANT=
 TEST_USER=auto_test@fintastic.ai # login for correct user to run tests
 TEST_USER_PASSWORD=
 
-INCORRECT_USER= # correct user but absent in tenant
-INCORRECT_USER_PASSWORD=
-
-STANDARD_USER= # user with low permissions (not power nor modeller)
-STANDARD_USER_PASSWORD=
+# optional
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+DB_PORT=
 ```
 
-Note:
-User `INCORRECT_USER` is used to check "failed login" flows, so you can ignore it if you don't want to check them.
-User `STANDARD_USER` is for non-power user flows (not implemented yet).
+Note: `DB_NAME` and all the `DB...` required for [local database config](./db-config.md).
 
 4. Run tests with [Playwright UI](https://playwright.dev/docs/test-ui-mode) (do not forget to run local app for local
    environment):
