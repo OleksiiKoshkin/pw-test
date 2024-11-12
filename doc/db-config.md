@@ -110,11 +110,12 @@ Then you need to configure environment file with connection params:
 DB_NAME=
 DB_USER=
 DB_PASSWORD=
-DB_PORT=
+DB_HOST=
+DB_PORT= # optional
+DB_SCHEMA= # optional
 ```
 
 Then you can run [configuration script](./run-config.md):
-
 
 ```shell
 npm run configure:run

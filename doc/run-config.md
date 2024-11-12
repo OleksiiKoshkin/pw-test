@@ -1,5 +1,9 @@
 # Fintastic e2e: Run configurations
 
+![screenshot](img/e2e-run-structure.drawio.png)
+
+Configurator is the topic of this document.
+
 To configure which tests should be run, there are two (well, three) ways.
 
 ## Target Config JSON
@@ -22,6 +26,7 @@ npm run test
 which will open Playwright UI with all the available tests:
 
 ![screenshot](img/run-tests-all.png)
+
 
 ## Default local config
 
@@ -72,7 +77,7 @@ There is no diff between local and remote DBs. Just declare correct connection p
 
 ### Case: Database
 
-`.env` has at least `DB_NAME` variable configured, [database](./db-config.md) is available.
+When `.env` has at least `DB_NAME` variable configured, [database](./db-config.md) is available.
 
 ```shell
 npm run configure
@@ -104,7 +109,7 @@ which runs [scenarios player](./scenarios-player.md).
 
 ## Case: Local
 
-`.env` does not have `DB_NAME` variable configured.
+When `.env` does not have `DB_NAME` variable configured.
 
 ```shell
 npm run configure

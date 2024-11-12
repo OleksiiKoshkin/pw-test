@@ -6,6 +6,7 @@ End-to-end test infrastructure for testing different environments. Based on [Pla
 framework.
 
 ## Starting point
+* [Main entities](doc/entities.md)
 
 ### TL;DR
 
