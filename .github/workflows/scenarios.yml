@@ -31,29 +31,14 @@ on:
           - pnl_net_calculation
           - performance-version-page
           - login-flow
-      environment:
-        type: environment
-        description: Select environment (credentials)
 
 jobs:
   test:
     timeout-minutes: 60
-    #runs-on: ubuntu-latest
-    runs-on: fintastic-arm64-runner
+    runs-on: ubuntu-latest
+#    runs-on: fintastic-arm64-runner
     environment: ${{ inputs.environment }}
     steps:
-      - name: Use variables
-        env:
-          ENV_NAME: ${{ inputs.environment }}
-          ONLY_SCENARIO: ${{ inputs.run_scenarios }}
-          ONLY_TENANT: ${{ inputs.run_on_tenants }}
-          ONLY_ENVIRONMENT: ${{ inputs.run_on_env }}
-        run: |
-          echo "ENV_NAME: $ENV_NAME"
-          echo "ONLY_SCENARIO: ONLY_SCENARIO"
-          echo "ONLY_TENANT: ONLY_TENANT"
-          echo "ONLY_ENVIRONMENT: ONLY_ENVIRONMENT"
-
       - name: Check user set
         run: |
           if [[ "${{ secrets.TEST_USER }}" == "" ]]; then exit 1; else echo "OK"; fi
