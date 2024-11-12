@@ -13,7 +13,8 @@ Usual flow of e2e for new features:
 4. Write and run e2e tests locally.
 5. [Optional] If you have app test environment for the feature:
    1. [Create new environment on CI/CD](ci-cd-environments.md) 
-   2. Run e2e tests on CI/CD using your branch and new environment.
+   2. Run e2e tests on CI/CD using your branch and new environment, if any.
 6. Merge feature to app repository (PR).
-7. Merge feature into e2e repository (PR). 
-   1. Remove environment created on step 5, if any.
+7. Merge feature into e2e repository (PR).
+8. Merge new [Scenario Id(s)](./scenarios.md) and base targets to the database(s)
+9. Change [local default config](./run-config.md) by adding new scenario(s)

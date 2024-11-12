@@ -7,6 +7,8 @@ framework.
 
 ## Starting point
 
+### TL;DR
+
 * [How to run locally](doc/local-run.md)
 * [How to run on GitHub](doc/ci-cd-run.md)
 
@@ -14,32 +16,20 @@ framework.
 
 * [Setting up CI/CD](doc/ci-cd-environments.md)
 * [How to access results on CI/CD](doc/ci-cd-results.md)
-* [How to access results on CI/CD - performance tests](doc/ci-cd-results-performance.md)
 
-## Technical details
+## Configurations
 
-### Test projects
+* [Configurations - local, local DB, remote](doc/run-config.md)
+* [Config file format](doc/config-file-format.md)
+* [Setting up local PostgreSQL database](doc/db-config.md)
 
-* [Test projects](doc/projects.md)
-* [Auth flow](doc/auth-flow.md)
+## Testing
 
-### Performance testing
-
-* [Performance testing](doc/performance-testing.md)
+* [Scenarios](doc/scenarios.md)
+* [Runtime scenarios player](doc/scenarios-player.md)
+* [How to create a new scenario](doc/new-scenario.md)
 
 ### Best practices | Recommendations
 
-* [How to create a new project/scenario](doc/practices-new-project.md)
 * [Organisation of tests: general principles](doc/setup.md)
 * [Branching policy and testing new features](doc/branching.md)
-* [Environment-depending testing](doc/env-dependent-testing.md)
-
-## Scenarios
-
-* TBD: How to write scenario
-* TBD: Replace separate tests with scenarios
-* TBD: Update documentation
-
-## Local Scenarios Database
-* 
-* [Setting up local database](doc/db-config.md)

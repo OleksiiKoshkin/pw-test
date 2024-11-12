@@ -6,6 +6,7 @@ It establishes environment(s) according to current `targets.json` ([read more](c
 preparing test environments and executes tests.
 
 ![screenshot](img/e2e-scenarios.drawio.png)
+_See more detailed view below._
 
 First, player loads `targets.json`. Then it prepare main test cycle - wrap all the registered
 _test executors_ with runtime logic.
@@ -43,6 +44,8 @@ This is used mostly on CI/CD:
 
 Then, based on config targets, scenario player will execute each _test executor_ inside
 separate Playwright contexts.
+
+![screenshot](img/e2e-scenario-flow.drawio.png)
 
 It will:
 

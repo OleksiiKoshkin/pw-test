@@ -1,0 +1,26 @@
+{
+  "scenarios": [
+    {
+      "scenarioId": "%_NEW_SCENARIO_ID_%",
+      "name": "%_NEW_SCENARIO_HUMAN_READABLE_NAME_%",
+      "targets": [
+        {
+          "id": 1,
+          "name": "%_OPTIONAL_TARGET_NAME_%",
+          "tenant": "%_TENANT_CODE_LIKE_acme3_%",
+          "domain": "%_DOMAIN_CODE_LIKE_production_%",
+          "skipLogin": false,
+          "url": "board/...",
+          "targetWidgetId": "board-widget-arr",
+          "variants": [
+            {
+              "id": 1,
+              "name": "Segmentation Month",
+              "queryParams": "v=%7Ef036..."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

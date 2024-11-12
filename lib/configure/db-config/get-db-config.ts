@@ -41,7 +41,7 @@ export async function getDBConfig() {
   console.log(`Connecting to "${process.env.DB_HOST || 'localhost'}"...`);
 
   if (process.env.DB_HOST || 'localhost' === 'localhost') {
-    console.warn('Please pay attention: connection to the local database');
+    console.warn('Please pay attention: connected to the local database');
   }
 
   try {

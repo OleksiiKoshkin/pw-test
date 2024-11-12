@@ -17,12 +17,22 @@ DB_PORT=
 
 Note: `DB_NAME` and all the `DB...` required for [local database config](./db-config.md).
 
-4. Run tests with [Playwright UI](https://playwright.dev/docs/test-ui-mode) (do not forget to run local app for local
-   environment):
+If you want to use DB config (local or global, [about configs](./run-config.md), [database setup](./db-config.md))
+please configure `DB_...` params and in case of local DB - prepare database and data.
+
+4. Run tests with [Playwright UI](https://playwright.dev/docs/test-ui-mode):
+
+```shell
+npm run configure:run
+```
+
+After first configuration run (or after manual run config prepared) you can use
 
 ```shell
 npm run test
 ```
+
+command.
 
 ![screenshot](img/local-ui.png)
 
@@ -32,7 +42,15 @@ ALl the test suites are tagged, so you can select desired tests.
 
 To run tests in console use:
 
-`npm run test:headless` or `npm run test:headed` (is not recommended if you don't know what you're doing)
+```shell
+npm run configure:run:headless
+```
+
+or, when config is prepared,
+
+```shell
+npm run test:headless
+```
 
 ![screenshot](img/local-console.png)
 
@@ -43,18 +61,3 @@ npm run report
 ```
 
 ![screenshot](img/local-report.png)
-
-### Skip login
-
-(See [Auth flow](./auth-flow.md) page for details)
-
-To skip Login (auth) step on each run for local testing use `SKIP_AUTH=true` env variable:
-
-```shell
-SKIP_AUTH=true npm run test
-```` 
-
-(or other `npm run`s)
-
-ONLY after the first run. The framework will save the authorisation data after the first run (`projects/app-auth.ts`)
-and reuse it for all subsequent runs.
